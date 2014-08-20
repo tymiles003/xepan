@@ -61,10 +61,10 @@ class page_install extends Page {
 			//install sql file
 			//TODO USE Fopen instead file get content
 			$sql = file_get_contents('install.sql');
+			$this->api->db->dbh->setAttribute(PDO::MYSQL_ATTR_USE_BUFFERED_QUERY, false);
 			$this->api->db->dsql($this->api->db->dsql()->expr($sql))->execute();
 
 			//replace values in config-default file
-			//mark installed = true;
 			//
 			try{
 				$config=file_get_contents('config-template.php');
@@ -79,7 +79,9 @@ class page_install extends Page {
 
 
 			//create owner user 
-			$epan=$this->add('Model_Epan')->tryLoadAny();
+			$epan=$this->add('Model_Epan');
+			$epan->add('dynamic_model/Controller_AutoCreator');
+			$epan->tryLoadAny();
 
 			$user=$this->add('Model_Users');
 			$user['epan_id']=$epan->id;
