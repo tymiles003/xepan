@@ -6,11 +6,16 @@ class page_owner_updater extends page_base_owner {
 	function page_index(){
 		$this->add('View_Error')->set('1 : You are strongly recommended to backup your database and files and folders first.');
 		$this->add('View_Error')->set('2 : Provide proper permissions to get files replaced');
+		
+		$this->add('HR');
+
 		$update_btn = $this->add('Button')->set('Update');
+		
+		$update_btn->js('click',$update_btn->js()->text(' Updating ... '));
 
 		if($update_btn->isClicked()){
 			$this->update();
-			$this->js()->univ()->successMessage('xEpan CMS Updated')->execute();
+			$this->js(null, $update_btn->js()->text('Updated'))->univ()->successMessage('xEpan CMS Updated')->execute();
 		}
 	}
 
