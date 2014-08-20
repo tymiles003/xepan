@@ -10,7 +10,7 @@ class Model_Alerts extends Model_Table{
 		$this->addField('type')->enum(array('default','primary','success','info','warning','danger'));
 		$this->addField('sender_signature');
 
-		$this->add('dynamic_model/Controller_AutoCreator');
+		// $this->add('dynamic_model/Controller_AutoCreator');
 	}
 
 	function createNew($epan_id,$title,$type,$sender_signature){

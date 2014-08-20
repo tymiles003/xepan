@@ -19,7 +19,7 @@ class Model_Users extends Model_Table {
 
 		$this->addHook('beforeDelete',$this);
 		$this->addHook('beforeSave',$this);
-		$this->add('dynamic_model/Controller_AutoCreator');
+		// $this->add('dynamic_model/Controller_AutoCreator');
 	}
 
 	function beforeSave(){

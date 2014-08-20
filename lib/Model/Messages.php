@@ -10,6 +10,6 @@ class Model_Messages extends Model_Table{
 		$this->addField('is_read')->type('boolean');
 		$this->addField('sender_signature');
 
-		$this->add('dynamic_model/Controller_AutoCreator');
+		// $this->add('dynamic_model/Controller_AutoCreator');
 	}
 }
