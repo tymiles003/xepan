@@ -1,6 +1,7 @@
+epans/*
+epan-components/*
 *.zip
 config-default.php
 /nbproject/private/
 nbproject
-EpanCMSApp.php
 *.orig
