@@ -500,6 +500,10 @@ class GitRepo {
 		return $branchArray;
 	}
 
+	public function add_remote_address($remote, $name='origin'){
+		return $this->run('remote add '. $name . ' ' . $remote);
+	}
+
 	/**
 	 * Returns name of active branch
 	 *
@@ -552,8 +556,8 @@ class GitRepo {
 	 * @access  public
 	 * @return  string
 	 */
-	public function fetch() {
-		return $this->run("fetch");
+	public function fetch($options='') {
+		return $this->run("fetch " . $options);
 	}
 
 	/**
