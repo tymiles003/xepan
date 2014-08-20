@@ -40,15 +40,15 @@ class View_AddComponentToRepository extends \View{
 					}
 
 					// check entry in marketplace if this namespace is already used
-					$existing_namespace = $this->add( 'Model_MarketPlace' );
-					$existing_namespace->tryLoadBy( 'namespace', $config_array['namespace'] );
-					if ( $existing_namespace->loaded() ) {
+					$marketplace = $this->add( 'Model_MarketPlace' );
+					$marketplace->tryLoadBy( 'namespace', $config_array['namespace'] );
+					if ( $marketplace->loaded() ) {
 						if($_POST['replace_existing']){
 							// Remove Existing entries
-							$existing_namespace->ref('Tools')->deleteAll();
-							$existing_namespace->ref('Plugins')->deleteAll();
-							$existing_namespace->ref('InstalledComponents')->deleteAll();
-							$existing_namespace->delete();
+							$marketplace->ref('Tools')->deleteAll();
+							$marketplace->ref('Plugins')->deleteAll();
+							$marketplace->ref('InstalledComponents')->deleteAll();
+							// $marketplace->delete();
 						}else{
 							$this->add( 'View_Error' )->set( 'This namespace is already used and application is installed.' );
 							return;
@@ -58,7 +58,7 @@ class View_AddComponentToRepository extends \View{
 
 					// throw $this->exception('<pre>'.print_r($config_array,true).'</pre>', 'ValidityCheck')->setField('FieldName');
 
-					$marketplace=$this->add( 'Model_MarketPlace' );
+					// $marketplace=$this->add( 'Model_MarketPlace' );
 					$marketplace['name']=$config_array['name'];
 					$marketplace['namespace']=$config_array['namespace'];
 					$marketplace['type']=$config_array['type'];
@@ -102,6 +102,10 @@ class View_AddComponentToRepository extends \View{
 					// extract uploaded zip file to epan-components
 					if ( !$zip->extractZip( $_FILES['component_file']['tmp_name'], getcwd().DIRECTORY_SEPERATOR. 'epan-components'.DIRECTORY_SEPERATOR. $config_array['namespace'] ) ) {
 						return "Couldn't Extract";
+					}
+
+					if($_POST['replace_existing']){
+						$this->api->redirect($marketplace['namespace'].'_page_owner_update');
 					}
 
 					// TODO Execute install.sql file IF EXISTS

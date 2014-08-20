@@ -38,12 +38,15 @@ class Model_MarketPlace extends Model_Table {
 		if(!$this['type']) throw $this->exception('Please specify type', 'ValidityCheck')->setField('type');
 
 		$existing_check = $this->add('Model_MarketPlace');
-		$existing_check->tryLoadBy('namespace',$this['namespace']);
+		$existing_check->addCondition('id','<>',$this->id);
+		$existing_check->addCondition('namespace',$this['namespace']);
+		$existing_check->tryLoadAny();
+
 		if($existing_check->loaded())
 			throw $this->exception('Name Space Already Used', 'ValidityCheck')->setField('namespace');
 
 		// TODO :: check namespace on server as well...
-		if(file_exists(getcwd().DS.'epan-components'.DS.$this['namespace'])){
+		if(file_exists(getcwd().DS.'epan-components'.DS.$this['namespace']) and !$this->isInstalling){
 			throw $this->exception('namespace folder is already created', 'ValidityCheck')->setField('namespace');
 		}
 
