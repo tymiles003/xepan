@@ -32,14 +32,16 @@ class page_componentBase_page_update extends page_base_owner{
 
 		if($dynamic_model_update){
 			$dir = $component_path.DS.'lib'.DS.'Model';
-			$lst = scandir($dir);
-                array_shift($lst);
-                array_shift($lst);
-            foreach ($lst as $item){
-            	$model = $this->add($this->component_namespace.'/Model_'.str_replace(".php", '', $item));
-            	$model->add('dynamic_model/Controller_AutoCreator');
-            	$model->tryLoadAny();
-            }
+			if(file_exists($dir)){
+				$lst = scandir($dir);
+	                array_shift($lst);
+	                array_shift($lst);
+	            foreach ($lst as $item){
+	            	$model = $this->add($this->component_namespace.'/Model_'.str_replace(".php", '', $item));
+	            	$model->add('dynamic_model/Controller_AutoCreator');
+	            	$model->tryLoadAny();
+	            }
+			}
 		}
 
 
