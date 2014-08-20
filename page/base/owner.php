@@ -18,6 +18,8 @@ class page_base_owner extends Page {
 		$this->api->load_plugins();
 		if(!$this->api->isAjaxOutput()){
 			$this->menu = $this->api->add('View_Menu',null,'menu',array('owner/menu'));
+			if($this->api->getConfig('default_site') != $this->api->current_website['name'])
+				$this->menu->template->tryDel('update_menu');
 		}
 	}
 
