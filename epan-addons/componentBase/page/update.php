@@ -36,7 +36,7 @@ class page_componentBase_page_update extends page_base_owner{
                 array_shift($lst);
                 array_shift($lst);
             foreach ($lst as $item){
-            	$model = $this->add($this->component_namespace.'/Model_'.$item);
+            	$model = $this->add($this->component_namespace.'/Model_'.str_replace(".php", '', $item));
             	$model->add('dynamic_model/Controller_AutoCreator');
             	$model->tryLoadAny();
             }
