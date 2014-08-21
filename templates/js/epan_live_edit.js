@@ -455,7 +455,7 @@ $(function() {
 
     $('#dashboard-btn').click(function(event) {
         // TODO check if content is changed
-        window.location.replace('?page=owner_dashboard');
+        window.location.replace('index.php?page=owner_dashboard');
     });
 
     $('#template-btn').click(function(event) {
