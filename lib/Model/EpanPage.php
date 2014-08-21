@@ -7,6 +7,8 @@ class Model_EpanPage extends Model_Table {
 		parent::init();
 
 		$this->hasOne('Epan','epan_id');
+		$this->addCondition('epan_id',$this->api->current_website->id);
+		
 		$this->hasOne('EpanPage','parent_page_id')->defaultValue(0);
 		$this->hasOne('EpanTemplates','template_id')
 			->defaultValue($this->add('Model_EpanTemplates')->addCondition('is_current',true)->loadAny()->get('id'));
