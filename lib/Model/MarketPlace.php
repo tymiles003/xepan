@@ -157,6 +157,7 @@ class Model_MarketPlace extends Model_Table {
 					$tool->isInstalling = true;
 					$tool->save();	
 				}
+				break;
 			}else{
 				$tool = $this->add('Model_Tools');
 				$tool['component_id'] = $marketplace->id;
@@ -173,7 +174,7 @@ class Model_MarketPlace extends Model_Table {
 
 		foreach ($config_array['Plugins'] as $plg) {
 			if(is_array($plg[0])){
-				foreach ($$plg as $plg_2) {
+				foreach ($plg as $plg_2) {
 					$plg_m = $this->add('Model_Plugins');
 					$plg_m['component_id'] = $marketplace->id;
 					$plg_m['name'] = $plg_2['name'];
@@ -183,6 +184,7 @@ class Model_MarketPlace extends Model_Table {
 					$plg_m->isInstalling = true;
 					$plg_m->save();
 				}
+				break;
 			}else{
 				$plg_m = $this->add('Model_Plugins');
 				$plg_m['component_id'] = $marketplace->id;
@@ -192,6 +194,7 @@ class Model_MarketPlace extends Model_Table {
 				$plg_m['is_system'] = $plg['is_system'];
 				$plg_m->isInstalling = true;
 				$plg_m->save();
+			}
 		}
 	}
 
