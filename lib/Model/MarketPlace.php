@@ -96,6 +96,7 @@ class Model_MarketPlace extends Model_Table {
 	}
 
 	function reProcessConfig(){
+		
 		$config_file_path = 'epan-components'.DS.$this['namespace'].DS.'config.xml';
 		
 		if(!file_exists($config_file_path))
@@ -145,14 +146,28 @@ class Model_MarketPlace extends Model_Table {
 
 
 		foreach ($config_array['Tools'] as $tools) {
-			$tool = $this->add('Model_Tools');
-			$tool['component_id'] = $marketplace->id;
-			$tool['name'] = $tools['name'];
-			$tool['is_serverside'] = $tools['is_serverside'];
-			$tool['is_resizable'] = $tools['is_resizable'];
-			$tool['is_sortable'] = $tools['is_sortable'];
-			$tool->isInstalling = true;
-			$tool->save();
+			if(is_array($tools)){
+				foreach ($$tools as $tool_2) {
+					$tool = $this->add('Model_Tools');
+					$tool['component_id'] = $marketplace->id;
+					$tool['name'] = $tool_2['name'];
+					$tool['is_serverside'] = $tool_2['is_serverside'];
+					$tool['is_resizable'] = $tool_2['is_resizable'];
+					$tool['is_sortable'] = $tool_2['is_sortable'];
+					$tool->isInstalling = true;
+					$tool->save();	
+				}
+			}else{
+				$tool = $this->add('Model_Tools');
+				$tool['component_id'] = $marketplace->id;
+				$tool['name'] = $tools['name'];
+				$tool['is_serverside'] = $tools['is_serverside'];
+				$tool['is_resizable'] = $tools['is_resizable'];
+				$tool['is_sortable'] = $tools['is_sortable'];
+				$tool->isInstalling = true;
+				$tool->save();
+				
+			}
 		}
 
 
