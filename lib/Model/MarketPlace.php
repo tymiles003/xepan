@@ -24,6 +24,9 @@ class Model_MarketPlace extends Model_Table {
 		$this->addField('has_plugins')->type('boolean')->defaultValue(false)->caption('Plugins');
 		$this->addField('has_live_edit_app_page')->type('boolean')->defaultValue(false)->caption('Has Front App');
 
+		$this->addField('git_path');
+		$this->addField('initialize_and_clone_from_git')->type('boolean')->defaultValue(true);
+
 		$this->hasMany('InstalledComponents','component_id');
 		$this->hasMany('Tools','component_id');
 		$this->hasMany('Plugins','component_id');
@@ -50,16 +53,22 @@ class Model_MarketPlace extends Model_Table {
 			throw $this->exception('namespace folder is already created', 'ValidityCheck')->setField('namespace');
 		}
 
-		if(!$this->isInstalling) //Added in AddComponentTorepository View
-			$this->createNewFiles();
+		if(!$this->isInstalling){ //Added in AddComponentTorepository View
+			$create_component_folder = true;
+			if($this['initialize_and_clone_from_git'] and $this['git_path']){
+				$repo=Git::create($dest=getcwd().DS.'epan-components'.DS.$this['namespace'], $this['git_path']);
+				$create_component_folder = false;
+			}
+			$this->createNewFiles($create_component_folder);
+		}
 
 	}
 
-	function createNewFiles(){
+	function createNewFiles($create_component_folder=true){
 		$source=getcwd().DS.'epan-addons'.DS.'componentStructure'.DS.'namespace';
 		$dest=getcwd().DS.'epan-components'.DS.$this['namespace'];
 
-		$this->api->xcopy($source,$dest);
+		$this->api->xcopy($source,$dest,$create_component_folder);
 
 		foreach (
 		  $iterator = new RecursiveIteratorIterator(
@@ -71,10 +80,15 @@ class Model_MarketPlace extends Model_Table {
 		  	// open file $dest . DIRECTORY_SEPARATOR . $iterator->getSubPathName()
 		  	// replace {namespace} with $this['namespace']
 		  	// save
+		  	if(strpos($item, ".git") !== false /* git bypass */) continue;
+		  	
 		  	$file =$item;
 			$file_contents = file_get_contents($file);
 			$fh = fopen($file, "w");
+			
 			$file_contents = str_replace('{namespace}',$this['namespace'],$file_contents);
+			$file_contents = str_replace('{git_path}',$this['git_path']?'"'.$this['git_path'].'"':'null',$file_contents);
+
 			fwrite($fh, $file_contents);
 			fclose($fh);
 		  }
@@ -84,6 +98,10 @@ class Model_MarketPlace extends Model_Table {
 	function beforeDelete(){
 		if(!($deleted = $this->api->rrmdir($path = getcwd().DS.'epan-components'.DS.$this['namespace']))){
 		}
+
+		$this->ref('Plugins')->deleteAll();
+		$this->ref('Tools')->deleteAll();
+		$this->ref('InstalledComponents')->deleteAll();
 		// throw $this->exception($path . ' deleted = '. $deleted, 'ValidityCheck')->setField('FieldName');
 	}
 

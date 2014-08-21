@@ -315,7 +315,7 @@ class Frontend extends ApiFrontend{
 
 	function xcopy($source, $dest) {
 
-		mkdir($dest, 0777);
+		if(!file_exists($dest)) mkdir($dest, 0777);
 		foreach (
 		  $iterator = new RecursiveIteratorIterator(
 		  new RecursiveDirectoryIterator($source, RecursiveDirectoryIterator::SKIP_DOTS),

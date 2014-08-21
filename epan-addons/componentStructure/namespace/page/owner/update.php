@@ -2,7 +2,7 @@
 
 class page_{namespace}_page_owner_update extends page_componentBase_page_update {
 		
-	public $git_path=null; // Put your components git path here
+	public $git_path={git_path}; // Put your components git path here
 
 	function init(){
 		parent::init();
