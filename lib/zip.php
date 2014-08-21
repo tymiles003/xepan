@@ -125,4 +125,3 @@ $test->extractZip('./toto.zip', './new/');
             $zip->addFile($dir, str_replace($racine, '', $dir));
     }
 }
-?> 
