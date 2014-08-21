@@ -168,10 +168,9 @@ DROP TABLE IF EXISTS `epan_categories`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `epan_categories` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) NOT NULL,
-  `description` text NOT NULL,
-  `parent_category_id` int(11) NOT NULL DEFAULT '0',
-  `ordering` int(11) NOT NULL DEFAULT '0',
+  `name` varchar(255) DEFAULT NULL,
+  `description` varchar(255) DEFAULT NULL,
+  `parent_category_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `cat_id` (`id`),
   KEY `cat_parent` (`parent_category_id`),
@@ -185,7 +184,7 @@ CREATE TABLE `epan_categories` (
 
 LOCK TABLES `epan_categories` WRITE;
 /*!40000 ALTER TABLE `epan_categories` DISABLE KEYS */;
-INSERT INTO `epan_categories` VALUES (1,'Default','Default',0,0);
+INSERT INTO `epan_categories` VALUES (1,'Default','Default',0);
 /*!40000 ALTER TABLE `epan_categories` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -210,8 +209,10 @@ CREATE TABLE `epan_components_marketplace` (
   `has_owner_modules` tinyint(1) DEFAULT NULL,
   `has_plugins` tinyint(1) DEFAULT NULL,
   `has_live_edit_app_page` tinyint(1) DEFAULT NULL,
+  `git_path` varchar(255) DEFAULT NULL,
+  `initialize_and_clone_from_git` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=63 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=67 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -220,7 +221,7 @@ CREATE TABLE `epan_components_marketplace` (
 
 LOCK TABLES `epan_components_marketplace` WRITE;
 /*!40000 ALTER TABLE `epan_components_marketplace` DISABLE KEYS */;
-INSERT INTO `epan_components_marketplace` VALUES (51,'Basic Web Elements And Plugins','0','0','baseElements','element',1,'0',1,1,0,1,0);
+INSERT INTO `epan_components_marketplace` VALUES (51,'Basic Web Elements And Plugins','0','0','baseElements','element',1,'0',1,1,0,1,0,NULL,NULL);
 /*!40000 ALTER TABLE `epan_components_marketplace` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -297,7 +298,7 @@ CREATE TABLE `epan_installed_components` (
   `params` varchar(255) DEFAULT NULL,
   `installed_on` date DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -344,7 +345,7 @@ CREATE TABLE `epan_page` (
 
 LOCK TABLES `epan_page` WRITE;
 /*!40000 ALTER TABLE `epan_page` DISABLE KEYS */;
-INSERT INTO `epan_page` VALUES (1,0,'home','Home',1,0,'xEpan CMS, an innovative approach towards Drag And Drop CMS.','World\'s best and easiest cms :)','xEpan CMS, an innovative approach towards Drag And Drop CMS.','','cursor: move; overflow: auto; background-color: rgb(255, 255, 255);',NULL,'2014-08-20 19:12:35','public',1);
+INSERT INTO `epan_page` VALUES (1,0,'home','Home',1,0,'xEpan CMS, an innovative approach towards Drag And Drop CMS.','World\'s best and easiest cms :)','xEpan CMS, an innovative approach towards Drag And Drop CMS.','','cursor: move; overflow: auto; background-color: rgb(255, 255, 255);',NULL,'2014-08-20 19:17:54','public',1);
 /*!40000 ALTER TABLE `epan_page` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -446,11 +447,11 @@ DROP TABLE IF EXISTS `staff`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `staff` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(45) DEFAULT NULL,
-  `branch_id` int(11) NOT NULL,
-  `username` varchar(50) NOT NULL,
-  `password` varchar(50) NOT NULL,
-  `access_level` int(11) NOT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `branch_id` int(11) DEFAULT NULL,
+  `username` varchar(255) DEFAULT NULL,
+  `password` varchar(255) DEFAULT NULL,
+  `access_level` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_staff_branche1` (`branch_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
@@ -486,7 +487,7 @@ CREATE TABLE `users` (
   `last_login_date` date DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_epan_id` (`epan_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -507,4 +508,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-08-20 19:13:11
+-- Dump completed on 2014-08-21  9:44:06
