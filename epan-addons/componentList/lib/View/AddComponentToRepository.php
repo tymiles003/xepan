@@ -71,6 +71,8 @@ class View_AddComponentToRepository extends \View{
 					$marketplace['has_live_edit_app_page']=$config_array['has_live_edit_app_page'];
 					$marketplace['allowed_children']=$config_array['allowed_children'];
 					$marketplace['specific_to']=$config_array['specific_to'];
+					$marketplace['initialize_and_clone_from_git']=$config_array['initialize_and_clone_from_git'];
+					$marketplace['git_path']=$config_array['git_path'];
 					$marketplace->isInstalling = true;
 					$marketplace->save();
 
