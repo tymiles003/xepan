@@ -324,12 +324,12 @@ $('#epan-save-btn').click(function(event) {
 
 
     html_crc = crc32(html_body);
-    calling_page = '?page=save&cut_page=1';
+    calling_page = 'index.php?page=save&cut_page=1';
 
     if (edit_template == true) {
         html_body = encodeURIComponent($.trim($('#epan-content-wrapper').html()));
         html_crc = crc32(html_body);
-        calling_page = '?page=savetemplate&cut_page=1&template_id=' + current_template_id;
+        calling_page = 'index.php?page=savetemplate&cut_page=1&template_id=' + current_template_id;
     }
 
     $.ajax({
