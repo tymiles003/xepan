@@ -141,6 +141,8 @@ class Model_MarketPlace extends Model_Table {
 		$marketplace['has_live_edit_app_page']=$config_array['has_live_edit_app_page'];
 		$marketplace['allowed_children']=$config_array['allowed_children'];
 		$marketplace['specific_to']=$config_array['specific_to'];
+		$marketplace['initialize_and_clone_from_git']=$config_array['initialize_and_clone_from_git'];
+		$marketplace['git_path']=$config_array['git_path'];
 		$marketplace->isInstalling = true;
 		$marketplace->save();
 
@@ -224,6 +226,8 @@ class Model_MarketPlace extends Model_Table {
 		$xml->addChild('has_toolbar_tools',$this['has_toolbar_tools']);
 		$xml->addChild('has_owner_modules',$this['has_owner_modules']);
 		$xml->addChild('has_live_edit_app_page',$this['has_live_edit_app_page']);
+		$xml->addChild('git_path',$this['git_path']);
+		$xml->addChild('initialize_and_clone_from_git',$this['initialize_and_clone_from_git']);
 
 		$tools_node = $xml->addChild('Tools');
 
