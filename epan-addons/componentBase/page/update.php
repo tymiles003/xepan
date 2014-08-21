@@ -44,6 +44,11 @@ class page_componentBase_page_update extends page_base_owner{
 			}
 		}
 
+		// Re process Config file
+
+		$this->add('Model_MarketPlace')
+			->loadBy('namespace',$this->component_namespace)
+			->reProcessConfig();
 
 
 		// Get new code from git

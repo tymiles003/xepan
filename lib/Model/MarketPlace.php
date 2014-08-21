@@ -95,6 +95,79 @@ class Model_MarketPlace extends Model_Table {
 		}
 	}
 
+	function reProcessConfig(){
+		$config_file_path = 'epan-components'.DS.$this['namespace'].DS.'config.xml';
+		
+		if(!file_exists($config_file_path))
+			throw $this->exception('Config file not found')->addMoreInfo('Component',$this['namespace']);
+
+		$config_file_data = file_get_contents($config_file_path);
+		$xml = simplexml_load_string( $config_file_data );
+		$json = json_encode( $xml );
+		$config_array = json_decode( $json, TRUE );
+		// set error if not found -- not proper xml
+		if ( $config_array['namespace'] == "" ) {
+			throw $this->exception('NameSpace not found in config');
+			return;
+		}
+
+		// check entry in marketplace if this namespace is already used
+		$marketplace = $this->add( 'Model_MarketPlace' );
+		$marketplace->tryLoadBy( 'namespace', $config_array['namespace'] );
+
+		if ( ! $marketplace->loaded() ) {
+			throw $this->exception('Config Update Failed, No Existing Component is installed')->addMoreInfo('Component',$config_array['namespace']);
+		}
+
+		$marketplace->ref('Tools')->deleteAll();
+		$marketplace->ref('Plugins')->deleteAll();
+		// $marketplace->ref('InstalledComponents')->deleteAll();
+
+		// add entry to marketplace table (Model)
+
+		// throw $this->exception('<pre>'.print_r($config_array,true).'</pre>', 'ValidityCheck')->setField('FieldName');
+
+		// $marketplace=$this->add( 'Model_MarketPlace' );
+		$marketplace['name']=$config_array['name'];
+		$marketplace['namespace']=$config_array['namespace'];
+		$marketplace['type']=$config_array['type'];
+		$marketplace['is_system']=$config_array['is_system'];
+		$marketplace['description']=$config_array['description'];
+		$marketplace['default_enabled']=$config_array['default_enabled'];
+		$marketplace['has_toolbar_tools']=$config_array['has_toolbar_tools'];
+		$marketplace['has_owner_modules']=$config_array['has_owner_modules'];
+		$marketplace['has_plugins']=$config_array['has_plugins'];
+		$marketplace['has_live_edit_app_page']=$config_array['has_live_edit_app_page'];
+		$marketplace['allowed_children']=$config_array['allowed_children'];
+		$marketplace['specific_to']=$config_array['specific_to'];
+		$marketplace->isInstalling = true;
+		$marketplace->save();
+
+
+		foreach ($config_array['Tools'] as $tools) {
+			$tool = $this->add('Model_Tools');
+			$tool['component_id'] = $marketplace->id;
+			$tool['name'] = $tools['name'];
+			$tool['is_serverside'] = $tools['is_serverside'];
+			$tool['is_resizable'] = $tools['is_resizable'];
+			$tool['is_sortable'] = $tools['is_sortable'];
+			$tool->isInstalling = true;
+			$tool->save();
+		}
+
+
+		foreach ($config_array['Plugins'] as $plg) {
+			$plg_m = $this->add('Model_Plugins');
+			$plg_m['component_id'] = $marketplace->id;
+			$plg_m['name'] = $plg['name'];
+			$plg_m['event'] = $plg['event'];
+			$plg_m['params'] = $plg['params'];
+			$plg_m['is_system'] = $plg['is_system'];
+			$plg_m->isInstalling = true;
+			$plg_m->save();
+		}
+	}
+
 	function beforeDelete(){
 		if(!($deleted = $this->api->rrmdir($path = getcwd().DS.'epan-components'.DS.$this['namespace']))){
 		}
