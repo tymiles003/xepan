@@ -146,8 +146,8 @@ class Model_MarketPlace extends Model_Table {
 
 
 		foreach ($config_array['Tools'] as $tools) {
-			if(is_array($tools)){
-				foreach ($$tools as $tool_2) {
+			if(is_array($tools[0])){
+				foreach ($tools as $tool_2) {
 					$tool = $this->add('Model_Tools');
 					$tool['component_id'] = $marketplace->id;
 					$tool['name'] = $tool_2['name'];
@@ -172,14 +172,26 @@ class Model_MarketPlace extends Model_Table {
 
 
 		foreach ($config_array['Plugins'] as $plg) {
-			$plg_m = $this->add('Model_Plugins');
-			$plg_m['component_id'] = $marketplace->id;
-			$plg_m['name'] = $plg['name'];
-			$plg_m['event'] = $plg['event'];
-			$plg_m['params'] = $plg['params'];
-			$plg_m['is_system'] = $plg['is_system'];
-			$plg_m->isInstalling = true;
-			$plg_m->save();
+			if(is_array($plg[0])){
+				foreach ($$plg as $plg_2) {
+					$plg_m = $this->add('Model_Plugins');
+					$plg_m['component_id'] = $marketplace->id;
+					$plg_m['name'] = $plg_2['name'];
+					$plg_m['event'] = $plg_2['event'];
+					$plg_m['params'] = $plg_2['params'];
+					$plg_m['is_system'] = $plg_2['is_system'];
+					$plg_m->isInstalling = true;
+					$plg_m->save();
+				}
+			}else{
+				$plg_m = $this->add('Model_Plugins');
+				$plg_m['component_id'] = $marketplace->id;
+				$plg_m['name'] = $plg['name'];
+				$plg_m['event'] = $plg['event'];
+				$plg_m['params'] = $plg['params'];
+				$plg_m['is_system'] = $plg['is_system'];
+				$plg_m->isInstalling = true;
+				$plg_m->save();
 		}
 	}
 
