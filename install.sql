@@ -130,7 +130,7 @@ CREATE TABLE `epan` (
 
 LOCK TABLES `epan` WRITE;
 /*!40000 ALTER TABLE `epan` DISABLE KEYS */;
-INSERT INTO `epan` VALUES (1,'web',1,1,'admin','5000000','2014-01-26',1,'Xavoc Technocrats Pvt. Ltd.','Xavoc Admin','+91 8875191258','18/436, Gayatri marg, Kanji Ka hata, Udaipur, Rajasthan , India','Udaipur','Rajasthan','India','','xEpan CMS, an innovative approach towards Drag And Drop CMS.','World\'s best and easiest cms :)','http://www.xavoc.com',1,1,NULL,1,NULL,'','','','','','','','',1,'self_activated','');
+INSERT INTO `epan` VALUES (1,'web',1,1,'admin','5000000','2014-01-26',1,'Xavoc Technocrats Pvt. Ltd.','Xavoc Admin','+91 8875191258','18/436, Gayatri marg, Kanji Ka hata, Udaipur, Rajasthan , India','Udaipur','Rajasthan','India','','xEpan CMS, an innovative approach towards Drag And Drop CMS.','World\'s best and easiest cms :)','http://www.xavoc.com',1,1,NULL,1,NULL,'','','','','','','','',1,'self_activated','200');
 /*!40000 ALTER TABLE `epan` ENABLE KEYS */;
 UNLOCK TABLES;
 
