@@ -215,7 +215,7 @@ class Model_Epan extends Model_Table {
 		$epan_page['description'] = $obj['description'];
 		$epan_page['keywords'] = $obj['keywords'];
 		
-		$epan_page->save();
+		$epan_page->saveAndUnload();
 
 		// Add Default Alias as per name given to this Epan
 		$default_alias = $this->add('Model_Aliases');
