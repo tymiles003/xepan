@@ -226,8 +226,12 @@ class Model_Epan extends Model_Table {
 			
 		$user=$this->add('Model_Users');
 		$user->addCondition('epan_id',$new_id);
-		$user['username']=$this['username'];
+		$user['name']=$this['name'];
+		$user['email']=$this['email_id'];
+		$user['username']=$this['name'];
 		$user['password']=$this['password'];
+		$user['type']='BackEndUser';
+		$user['is_active']=true;
 		$user->save();
 
 		// Default Components Auto Installation
