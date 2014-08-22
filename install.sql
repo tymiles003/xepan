@@ -156,6 +156,7 @@ CREATE TABLE `epan_aliases` (
 
 LOCK TABLES `epan_aliases` WRITE;
 /*!40000 ALTER TABLE `epan_aliases` DISABLE KEYS */;
+INSERT INTO `epan_aliases` VALUES (1,'1','web');
 /*!40000 ALTER TABLE `epan_aliases` ENABLE KEYS */;
 UNLOCK TABLES;
 

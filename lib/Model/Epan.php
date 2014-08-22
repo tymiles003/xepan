@@ -10,7 +10,7 @@ class Model_Epan extends Model_Table {
 		$this->hasOne('EpanCategory','category_id')->mandatory('Please Select A Category');
 		
 		// Name is Default Alias for this epan
-		$this->addField('name')->caption('Epan Name')->hint('Any unique name for your epan like your_epan_name.epan.in')->mandatory('Epan alias is must');
+		$this->addField('name')->caption('Epan Name')->hint('Any unique name for your website')->mandatory('Epan alias is must');
 		// $this->addField('alias2')->caption('Alias 2')->hint('Any unique name for your epan like your_epan_name.epan.in')->mandatory('Epan alias is must');
 		$this->addField('password')->mandatory('Password is must to proceed')->type('password');
 		$this->addField('fund_alloted');
@@ -163,7 +163,7 @@ class Model_Epan extends Model_Table {
 			rename($old_dir_name, $new_dir_name);
 			$base_alias = $epan->ref('Aliases')->addCondition('name',$epan['name'])->tryLoadAny();
 			if(!$base_alias->loaded()){
-				throw $this->exception('Waht.. base alias not found');
+				throw $this->exception('What.. base alias not found');
 			}else{
 				$base_alias['name']=$this['name'];
 				$base_alias->saveAndUnload();
@@ -183,15 +183,22 @@ class Model_Epan extends Model_Table {
 				}
 			}
 
+
+		}
+
+		if($this->loaded() and ($this->dirty['name'] or $this->dirty['password'] )){
 			// Change default username and password also
 			$old_epan_entry = $this->add('Model_Epan')->load($this->id);
 			$user=$this->add('Model_Users');
 			$user->addCondition('username',$old_epan_entry['name']);
 			$user->tryLoadAny();
-			$user['username']=$this['name'];
-			$user['password']=$this['password'];
+			
+			if($this->dirty['name'])
+				$user['username']=$this['name'];
+			if($this->dirty['password'])
+				$user['password']=$this['password'];
 			$user->saveAndUnload();
-
+		
 		}
 
 		// Set all Pages keywords and description as per this one and title to this->keywords
