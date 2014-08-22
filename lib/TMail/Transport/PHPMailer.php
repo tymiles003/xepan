@@ -22,17 +22,17 @@ class TMail_Transport_PHPMailer extends AbstractObject {
             $mail->SetFrom($this->api->current_website['email_from'], $this->api->current_website['email_from_name']);
         }
 
-        $mail->SMTPAuthSecure = 'ssl';
-        $mail->AltBody = null;
+        $mail->SMTPSecure = 'ssl';
+        // $mail->AltBody = null;
         $mail->IsHTML(true);
-        $mail->SMTPKeepAlive = true;
+        // $mail->SMTPKeepAlive = true;
     }
 
     function getPHPMailer(){
         return $this->PHPMailer;
     }
 
-    function send($to,$from = null,$subject,$body,$ccs=null,$bcc=null){
+    function send($to,$from = null,$subject,$body,$ccs=null,$bcc=null,$headers=''){
         $mail = $this->PHPMailer;
         $mail->ClearAllRecipients();
         
@@ -65,7 +65,7 @@ class TMail_Transport_PHPMailer extends AbstractObject {
         }
 
         $mail->Subject = $subject;
-        $mail->MsgHTML($body);
+        $mail->MsgHTML("\n\n",$body);
         
         foreach (explode("\n", $headers) as $h){
             $mail->AddCustomHeader($h);
@@ -74,7 +74,7 @@ class TMail_Transport_PHPMailer extends AbstractObject {
     }
 
     function __destruct(){
-        $this->PHPMailer->SmtpClose();
+        // $this->PHPMailer->SmtpClose();
     }
 }
  
