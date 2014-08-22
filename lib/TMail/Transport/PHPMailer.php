@@ -22,8 +22,8 @@ class TMail_Transport_PHPMailer extends AbstractObject {
             $mail->SetFrom($this->api->current_website['email_from'], $this->api->current_website['email_from_name']);
         }
 
-        $mail->SMTPSecure = 'ssl';
-        // $mail->AltBody = null;
+        // $mail->SMTPSecure = 'ssl';
+        $mail->AltBody = null;
         $mail->IsHTML(true);
         // $mail->SMTPKeepAlive = true;
     }
@@ -65,11 +65,13 @@ class TMail_Transport_PHPMailer extends AbstractObject {
         }
 
         $mail->Subject = $subject;
-        $mail->MsgHTML("\n\n",$body);
+        $mail->MsgHTML($body);
         
         foreach (explode("\n", $headers) as $h){
             $mail->AddCustomHeader($h);
         }
+        
+
         $mail->Send();
     }
 
