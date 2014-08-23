@@ -88,10 +88,10 @@ protected $metaDataCache = array();
 public function __construct() {
 require dirname(__FILE__).DIRECTORY_SEPARATOR.'Dropbox'.DIRECTORY_SEPARATOR.'autoload.php';
 $opts = array(
-'consumerKey' => '',
-'consumerSecret' => '',
-'accessToken' => '',
-'accessTokenSecret' => '',
+'consumerKey' => '77xv1neq8giyswd',
+'consumerSecret' => 'i0tqlx1b88mt6wz',
+'accessToken' => '77xv1neq8giyswd',
+'accessTokenSecret' => 'i0tqlx1b88mt6wz',
 'dropboxUid' => '',
 'root' => 'dropbox',
 'path' => '/',
@@ -1144,7 +1144,7 @@ return $this->_unlink($path);
 * @return bool|string
 * @author Dmitry (dio) Levashov
 **/
-protected function _save($fp, $path, $name, $mime, $w, $h) {
+protected function _save($fp, $path, $name, $state) {
 if ($name) $path .= '/'.$name;
 $path = $this->_normpath($path);
 try {

@@ -556,3 +556,52 @@
   ),
   'header' => false,
 ) 
+[Sat, 23 Aug 2014 11:04:13 +0400] MKDIR: array (
+  'added' => 
+  array (
+    0 => 
+    array (
+      'mime' => 'directory',
+      'ts' => 1408777453,
+      'read' => 1,
+      'write' => 1,
+      'size' => 0,
+      'hash' => 'l1_dGVzdA',
+      'name' => 'test',
+      'phash' => 'l1_Lw',
+    ),
+  ),
+) 
+[Sat, 23 Aug 2014 11:14:17 +0400] MKFILE: array (
+  'added' => 
+  array (
+    0 => 
+    array (
+      'mime' => 'text/plain',
+      'ts' => 1408778057,
+      'read' => 1,
+      'write' => 1,
+      'size' => 0,
+      'hash' => 'l1_dW50aXRsZWQgZmlsZS50eHQ',
+      'name' => 'untitled file.txt',
+      'phash' => 'l1_Lw',
+    ),
+  ),
+) 
+[Sat, 23 Aug 2014 11:14:19 +0400] RM: array (
+  'removed' => 
+  array (
+    0 => 
+    array (
+      'mime' => 'text/plain',
+      'ts' => 1408778057,
+      'read' => 1,
+      'write' => 1,
+      'size' => 0,
+      'hash' => 'l1_dW50aXRsZWQgZmlsZS50eHQ',
+      'name' => 'untitled file.txt',
+      'phash' => 'l1_Lw',
+      'realpath' => '../../epans/web/untitled file.txt',
+    ),
+  ),
+) 
