@@ -84,13 +84,20 @@ class Model_MarketPlace extends Model_Table {
 		  	
 		  	$file =$item;
 			$file_contents = file_get_contents($file);
-			$fh = fopen($file, "w");
+			$fr = fopen($file, "r");
+			$new_name = str_replace("namespace", $this['namespace'], $file);
+			$fw = fopen($new_name, "w");
 			
 			$file_contents = str_replace('{namespace}',$this['namespace'],$file_contents);
 			$file_contents = str_replace('{git_path}',$this['git_path']?'"'.$this['git_path'].'"':'null',$file_contents);
 
-			fwrite($fh, $file_contents);
-			fclose($fh);
+			fwrite($fw, $file_contents);
+			fclose($fr);
+			fclose($fw);
+
+			if(strpos($file, 'namespace')!==false){
+				unlink($file);
+			}
 		  }
 		}
 	}
