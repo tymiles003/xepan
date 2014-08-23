@@ -164,7 +164,7 @@ class Frontend extends ApiFrontend{
 
 			if($_GET['edit_template']){
 				$this->edit_template = true;
-				$this->api->template->appendHTML('js_include','\nsfjdhkj;\n');
+				// $this->api->template->appendHTML('js_include','\nsfjdhkj;\n');
 				$this->stickyGET('edit_template');
 			}
 
