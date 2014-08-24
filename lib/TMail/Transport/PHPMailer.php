@@ -4,6 +4,10 @@ class TMail_Transport_PHPMailer extends AbstractObject {
 
     function init(){
         parent::init();
+
+        if(!$this->api->current_website['email_host'])
+            throw $this->exception('Website Settings are not defined, Please define General "Epan Settings >> Email Settings" first  ');
+
         require_once("PHPMailer/class.phpmailer.php");
         $this->PHPMailer = new PHPMailer(true);
 
@@ -17,10 +21,10 @@ class TMail_Transport_PHPMailer extends AbstractObject {
         $mail->Username   = $this->api->current_website['email_username'];
         $mail->Password   = $this->api->current_website['email_password'];
         
-        if($this->add('Controller_EpanCMSApp')->emailSettings($mail) !== true){
+        // if($this->add('Controller_EpanCMSApp')->emailSettings($mail) !== true){
             $mail->AddReplyTo($this->api->current_website['email_reply_to'], $this->api->current_website['email_reply_to_name']);
             $mail->SetFrom($this->api->current_website['email_from'], $this->api->current_website['email_from_name']);
-        }
+        // }
 
         // $mail->SMTPSecure = 'ssl';
         $mail->AltBody = null;
