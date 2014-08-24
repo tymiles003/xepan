@@ -260,6 +260,9 @@ class Model_MarketPlace extends Model_Table {
 		file_put_contents(getcwd().DS.'epan-components'.DS.$this['namespace'].DS.'config.xml', $xml->asXML());
 		// Zip file
 		$component_zip = new zip;
+		if(file_exists(getcwd().DS.'epan-components'.DS.$this['namespace'].DS.'/.',getcwd().DS.'epan-components'.DS.$this['namespace'].DS.$this['namespace'].'.zip')){
+			unlink(getcwd().DS.'epan-components'.DS.$this['namespace'].DS.'/.',getcwd().DS.'epan-components'.DS.$this['namespace'].DS.$this['namespace'].'.zip');
+		}
 		$component_zip->makeZip(getcwd().DS.'epan-components'.DS.$this['namespace'].DS.'/.',getcwd().DS.'epan-components'.DS.$this['namespace'].DS.$this['namespace'].'.zip');
 		// Download file
 		// delete created zip file
