@@ -57,7 +57,12 @@ class page_install extends Page {
 			if($tables_count)
 				$form->js()->univ()->errorMessage('Database allready contains tables, Cannot proceed')->execute();
 			
-			//
+			// Check for wiring permissions in root folder
+
+			if(!is_writable('config-template.php')){
+				$form->js()->univ()->errorMessage('No Writing permissions in folder')->execute();
+			}
+
 			//install sql file
 			//TODO USE Fopen instead file get content
 			$sql = file_get_contents('install.sql');
