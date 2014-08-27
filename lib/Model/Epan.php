@@ -215,8 +215,9 @@ class Model_Epan extends Model_Table {
 	function afterInsert($obj,$new_id){
 		// Default Template add
 		$template = $this->add('Model_EpanTemplates');
+		$template['epan_id'] = $new_id;
 		$template->save();
-		
+
 		// Add Default Page
 		$epan_page = $this->add('Model_EpanPage');
 		$epan_page['name']='home';
