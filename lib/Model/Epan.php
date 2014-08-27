@@ -213,16 +213,23 @@ class Model_Epan extends Model_Table {
 	}
 
 	function afterInsert($obj,$new_id){
+		// Default Template add
+		$template = $this->add('Model_EpanTemplates');
+		$template->save();
+		
 		// Add Default Page
 		$epan_page = $this->add('Model_EpanPage');
 		$epan_page['name']='home';
 		$epan_page['epan_id'] = $new_id;
+		$epan_page['template_id'] = $template->id;;
 
 		$epan_page['title'] = $obj['keywords'];
 		$epan_page['description'] = $obj['description'];
 		$epan_page['keywords'] = $obj['keywords'];
 		
 		$epan_page->saveAndUnload();
+
+
 
 		// Add Default Alias as per name given to this Epan
 		$default_alias = $this->add('Model_Aliases');
