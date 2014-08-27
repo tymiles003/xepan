@@ -141,7 +141,7 @@ class View_AddComponentToRepository extends \View{
 
 					// TODO Execute install.sql file IF EXISTS
 
-					if(file_exists(getcwd().DIRECTORY_SEPERATOR. 'epan-components'.DIRECTORY_SEPERATOR. $config_array['namespace']).DS. 'install.sql'){
+					if(file_exists(getcwd().DIRECTORY_SEPERATOR. 'epan-components'.DIRECTORY_SEPERATOR. $config_array['namespace'].DS. 'install.sql')){
 						$sql = file_get_contents(getcwd().DIRECTORY_SEPERATOR. 'epan-components'.DIRECTORY_SEPERATOR. $config_array['namespace'].DS. 'install.sql');
 						$this->api->db->dsql($this->api->db->dsql()->expr($sql))->execute();
 					}
