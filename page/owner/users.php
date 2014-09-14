@@ -5,7 +5,7 @@ class page_owner_users extends page_base_owner {
 
 		$crud=$this->add('CRUD');
 		$usr=$this->add('Model_Users');
-		$usr->addCondition('epan_id',$this->api->current_website->id);
+		
 		$crud->setModel($usr);
 
 		if($crud->grid){
