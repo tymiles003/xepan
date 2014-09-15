@@ -5,7 +5,7 @@ class Model_Users extends Model_Table {
 		parent::init();
 		
 		$this->hasOne('Epan','epan_id')->mandatory(true);
-		$this->addCondition('epan_id',$this->api->current_website->id);
+		//$this->addCondition('epan_id',$this->api->current_website->id);
 		
 		$this->addField('name');
 		$this->addField('email');
