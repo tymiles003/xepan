@@ -216,6 +216,7 @@ class Model_Epan extends Model_Table {
 		// Default Template add
 		$template = $this->add('Model_EpanTemplates');
 		$template['epan_id'] = $new_id;
+		$template['is_current'] = 1;
 		$template->save();
 
 		// Add Default Page
