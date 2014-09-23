@@ -8,11 +8,11 @@ class View_Tools_UserPanel extends \componentBase\View_Component{
 	function init(){
 		parent::init();
 
-		if(!$this->api->isLoggedIn()){
-			// create login form
-		}else{
-			// create hello user panel
-		}
+		// if(!$this->api->isLoggedIn()){
+		// 	// create login form
+		// }else{
+		// 	// create hello user panel
+		// }
 
 	}
 

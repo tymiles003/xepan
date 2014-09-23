@@ -158,7 +158,7 @@ class Frontend extends ApiFrontend{
 			$auth=$this->add( 'BasicAuth' );
 			$auth->setModel( 'Users', 'username', 'password' );
 
-			if($this->api->auth->isLoggedIn() AND $this->api->auth->model->ref('epan_id')->get('name')==$this->api->website_requested AND ($this->api->auth->model['type'] >=80)){
+			if($this->api->auth->isLoggedIn() AND $this->api->auth->model->ref('epan_id')->get('name')==$this->api->website_requested AND $this->api->auth->model['type'] >= 80){
 				$this->edit_mode = true;
 			}
 
