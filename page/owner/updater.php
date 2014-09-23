@@ -52,6 +52,16 @@ class page_owner_updater extends page_base_owner {
 	            }
         	}
 		}
+
+		// fire queries to convert superuser to 100 etc
+		$this->query('UPDATE users SET type=IF(type="SuperUser",100,IF(type="BackEndUser",80,50))');
+		// change users type to int
+		$this->query('ALTER TABLE `users` CHANGE `type` `type` INT NULL DEFAULT NULL');
+
+		// re Process base Element Config
+		$base_element_market_place = $this->add('Model_MarketPlace')->loadBy('name','baseElements');
+		$base_element_market_place->reProcessConfig();
+
 	}
 
 	function query($q){

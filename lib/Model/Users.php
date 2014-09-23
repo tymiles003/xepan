@@ -15,7 +15,7 @@ class Model_Users extends Model_Table {
 		// $this->addField('is_systemuser')->type('boolean')->defaultValue(false);
 		// $this->addField('is_frontenduser')->type('boolean')->defaultValue(false);
 		// $this->addField('is_backenduser')->type('boolean')->defaultValue(false);
-		$this->addField('type')->enum(array('SuperUser','FrontEndUser','BackEndUser'))->defaultValue('FrontEndUser');
+		$this->addField('type')->setValueList(array(100=>'SuperUser',80=>'BackEndUser',50=>'FrontEndUser'))->defaultValue(50);
 		$this->addField('is_active')->type('boolean')->defaultValue(false);
 		$this->addField('activation_code');
 		$this->addField('last_login_date')->type('date');
