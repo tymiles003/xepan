@@ -23,6 +23,10 @@ class Model_Tools extends Model_Table {
 	function beforeSave(){
 		// Check if tool already exists
 		
+		if($this->loaded() and $this->dirty['name'])
+			throw $this->exception('Tool Name Cannot Be Edited','ValidityCheck')->setField('name');
+			
+
 		$namespace = $this->ref('component_id')->get('namespace');
 
 		$check_existing = $this->add('Model_Tools');
@@ -30,6 +34,9 @@ class Model_Tools extends Model_Table {
 						->addField('namespace');
 		$check_existing->addCondition('namespace',$namespace);
 		$check_existing->addCondition('name',$this['name']);
+
+		if($this->loaded())
+			$check_existing->addCondition('id','<>',$this->id);
 
 		$check_existing->tryLoadAny();
 		if($check_existing->loaded())
