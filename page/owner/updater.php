@@ -59,7 +59,7 @@ class page_owner_updater extends page_base_owner {
 		$this->query('ALTER TABLE `users` CHANGE `type` `type` INT NULL DEFAULT NULL');
 
 		// re Process base Element Config
-		$base_element_market_place = $this->add('Model_MarketPlace')->loadBy('name','baseElements');
+		$base_element_market_place = $this->add('Model_MarketPlace')->loadBy('namespace','baseElements');
 		$base_element_market_place->reProcessConfig();
 
 	}
