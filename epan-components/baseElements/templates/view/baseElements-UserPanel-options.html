@@ -1,9 +1,42 @@
 <div id='<?$_name?>' class='epan-component-options' component_type="<?$component_type?>">
-	<h3><?$component_type_name?></h3>
+	<h4><?$component_type_name?></h4>
 
-	<input type='text' value='' id='input_option_b' />
+	<input id="user_panel_form_stacked" type="checkbox">Stacked</input>
+	<input id="user_panel_remember_<?$id?>" type="checkbox">Remember Me</input></br>
+	<input id="user_panel_forgotpassword_<?$id?>" type="checkbox">Forgot Password</input></br>
+	<input id="user_panel_new_registration_<?$id?>" type="checkbox">New Registration</input></br>
+
+	<label for="user_panel_username_caption">Username Caption
+	<input id="user_panel_username_caption" type="text"/>
+	</label>
+
+	<label for="user_panel_password_caption">Password Caption
+	<input id="user_panel_password_caption" type="text"/>
+	</label>
+
+	<label for="user_panel_remember_caption">Remember Caption
+	<input id="user_panel_remember_caption" type="text"/>
+	</label>
+
+	<label for="user_panel_forgotpassword_caption">Forgot Password Caption
+	<input id="user_panel_forgotpassword_caption" type="text"/>
+	</label>
+
+	<label for="user_panel_login_caption">Login Button Caption
+	<input id="user_panel_login_caption" type="text"/>
+	</label>
+
+	<label for="user_panel_new_registration_caption">New Registration Button Caption
+	<input id="user_panel_new_registration_caption" type="text"/>
+	</label>
 
 
+	<label for="user_panel_username_placeholder">Username Placeholder
+	<input id="user_panel_username_placeholder"/>
+	</label>
+	<label for="user_panel_password_placeholder">Username Placeholder
+	<input id="user_panel_password_placeholder"/>
+	</label>
 </div>
 <script type="text/javascript">
 // ========== OPTION TO COMPONENT EFFECT ==============
@@ -12,9 +45,60 @@
 // 		$(current_selected_component).what to do ???
 // }) 
 
-$('#input_option_b').change(function(event) {
-	$(current_selected_component).find('b').text($('#input_option_b').val());
+
+$('#user_panel_form_stacked').change(function(event) {
+	if($('#user_panel_form_stacked').is(':checked')?$(current_selected_component).attr('form_stacked_on',1):$(current_selected_component).attr('form_stacked_on',0));
+	$(current_selected_component).univ().errorMessage('Save and reload Page to see changes');
 });
+$('#user_panel_remember_<?$id?>').change(function(event) {
+	if($('#user_panel_remember_<?$id?>').is(':checked')?$(current_selected_component).attr('show_remember_me',1):$(current_selected_component).attr('show_remember_me',0));
+	$(current_selected_component).univ().errorMessage('Save and reload Page to see changes');
+});
+$('#user_panel_username_placeholder').change(function(event) {
+	$(current_selected_component).attr('user_panel_username_placeholder',$('#user_panel_username_placeholder').val());
+	$(current_selected_component).univ().errorMessage('Save and reload Page to see changes');
+});
+$('#user_panel_password_placeholder').change(function(event) {
+	$(current_selected_component).attr('user_panel_password_placeholder',$('#user_panel_password_placeholder').val());
+	$(current_selected_component).univ().errorMessage('Save and reload Page to see changes');
+});
+
+$('#user_panel_username_caption').change(function(event) {
+	$(current_selected_component).attr('user_panel_name',$('#user_panel_username_caption').val());
+	$(current_selected_component).univ().errorMessage('Save and reload Page to see changes');
+});
+$('#user_panel_password_caption').change(function(event) {
+	$(current_selected_component).attr('user_panel_pass',$('#user_panel_password_caption').val());
+	$(current_selected_component).univ().errorMessage('Save and reload Page to see changes');
+});
+$('#user_panel_remember_caption').change(function(event) {
+	$(current_selected_component).attr('user_panel_remember_caption',$('#user_panel_remember_caption').val());
+	$(current_selected_component).univ().errorMessage('Save and reload Page to see changes');
+});
+$('#user_panel_forgotpassword_caption').change(function(event) {
+	$(current_selected_component).attr('user_panel_forgot_pass',$('#user_panel_forgotpassword_caption').val());
+	$(current_selected_component).univ().errorMessage('Save and reload Page to see changes');
+});
+$('#user_panel_new_registration_caption').change(function(event) {
+	$(current_selected_component).attr('user_panel_btn_registration_name',$('#user_panel_new_registration_caption').val());
+	$(current_selected_component).univ().errorMessage('Save and reload Page to see changes');
+});
+$('#user_panel_login_caption').change(function(event) {
+	$(current_selected_component).attr('user_panel_btn_login_name',$('#user_panel_login_caption').val());
+	$(current_selected_component).univ().errorMessage('Save and reload Page to see changes');
+});
+
+$('#user_panel_forgotpassword_<?$id?>').change(function(event) {
+	if($('#user_panel_forgotpassword_<?$id?>').is(':checked')?$(current_selected_component).attr('show_forgot_password',1):$(current_selected_component).attr('show_forgot_password',0));
+	$(current_selected_component).univ().errorMessage('Save and reload Page to see changes');
+});
+
+$('#user_panel_new_registration_<?$id?>').change(function(event) {
+	if($('#user_panel_new_registration_<?$id?>').is(':checked')?$(current_selected_component).attr('show_register_new_user',1):$(current_selected_component).attr('show_register_new_user',0));
+	$(current_selected_component).univ().errorMessage('Save and reload Page to see changes');
+});
+
+
 
 var <?$component_type?>_options = {
 	show: function (){
@@ -22,7 +106,21 @@ var <?$component_type?>_options = {
 		// TO TAKE VALUES FROM COMPONENT AND FILL OPTIONS
 		// 
 		// $(your_option_html_element).text($(current_selected_component).css('border'));
-		$('#input_option_b').val($(current_selected_component).find('b').text());
+		$('#user_panel_new_registration_<?$id?>').attr('checked',$(current_selected_component).attr("show_register_new_user")=='1'?true:false);
+		$('#user_panel_forgotpassword_<?$id?>').attr('checked',$(current_selected_component).attr("show_forgot_password")=='1'?true:false);
+		
+		$('#user_panel_remember_<?$id?>').attr('checked',$(current_selected_component).attr("show_remember_me")=='1'?true:false);
+
+		$('#user_panel_remember_caption').val($(current_selected_component).attr('user_panel_remember_caption'));
+		$('#user_panel_forgotpassword_caption').val($(current_selected_component).attr('user_panel_forgot_pass'));
+		$('#user_panel_new_registration_caption').val($(current_selected_component).attr('user_panel_btn_registration_name'));
+		$('#user_panel_login_caption').val($(current_selected_component).attr('user_panel_btn_login_name'));
+		$('#user_panel_username_caption').val($(current_selected_component).attr('user_panel_name'));
+		$('#user_panel_password_caption').val($(current_selected_component).attr('user_panel_pass'));
+		$('#user_panel_form_stacked').val($(current_selected_component).attr('form_stacked_on'));
+
+		$('#user_panel_username_placeholder').val($(current_selected_component).attr('user_panel_username_placeholder'));
+
 	}
 }
 </script>
