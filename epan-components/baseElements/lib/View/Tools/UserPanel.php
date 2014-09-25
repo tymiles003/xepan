@@ -80,32 +80,33 @@ class View_Tools_UserPanel extends \componentBase\View_Component{
 					$username_field->setAttr('placeHolder',$this->html_attributes['user_panel_username_placeholder']);
 				if($this->html_attributes['user_panel_password_placeholder'])
 					$password_field->setAttr('placeHolder',$this->html_attributes['user_panel_password_placeholder']);
-				$cols = $form->add('Columns');
 				
+				$cols = $form->add('Columns');
+				$col = $cols->addColumn(12);
+				$submit_field = $form->addSubmit($user_panel_btn_login_name)->addClass('btn btn-block btn-default');
+				$submit_field->js(true)->appendTo($col);//->add($submit_field);
+				$form->js(true)->find('.atk-buttons')->removeClass('atk-buttons');
+				// $submit_field->js('click',$form->js()->submit());
+					
 				if($this->html_attributes['show_remember_me']){
-					$col = $cols->addColumn(3);
+					$col = $cols->addColumn(6);
 					$remeber_field = $form->addField('Checkbox','remember',$user_panel_remember_pass);
 					$col->add($remeber_field);
 					}
 				if($this->html_attributes['show_forgot_password']){
-					$col = $cols->addColumn(3);
+					$col = $cols->addColumn(6);
 					$forgot_field = $form->add('View')->set($user_panel_forgot_pass)->setElement('a')->setAttr('href','index.php');
 					$col->add($forgot_field);	
 					}	
 
 				if($this->html_attributes['show_register_new_user']){
-					$col = $cols->addColumn(3);
+					$col = $cols->addColumn(12);
 					$sign_up_field = $form->add('Button')->set($user_panel_btn_registration_name);
 					$col->add($sign_up_field);
 					$sign_up_field->js('click',$this->js()->reload(array('new_registration'=>1)));
 				}	
 				
-				$col = $cols->addColumn(3);
-				$submit_field = $form->addSubmit($user_panel_btn_login_name);
 				
-				$submit_field->js(true)->appendTo($col);//->add($submit_field);
-				$form->js(true)->find('.atk-buttons')->removeClass('atk-buttons');
-				// $submit_field->js('click',$form->js()->submit());
 				
 
 				if($form->isSubmitted()){
@@ -130,7 +131,11 @@ class View_Tools_UserPanel extends \componentBase\View_Component{
 
 		}else{
 			// create hello user panel
-			$this->add('View_Error');
+			$cols=$this->add('Columns');
+			$leftcol=$cols->addColumn(10);
+			$rightcol=$cols->addColumn(2);
+			$leftcol->add('View')->set('Hello'." ".$this->api->auth->model['username']);
+			$rightcol->add('View')->set('Logout')->setElement('a')->setAttr('href','index.php?page=logout');
 		}
 
 	}
