@@ -165,9 +165,12 @@ class View_Tools_UserPanel extends \componentBase\View_Component{
 			}
 
 		}else{
-			// create Verify Account panel
-			
-			$this->add('View_Error');
+			// create hello user panel
+			$cols=$this->add('Columns');
+			$leftcol=$cols->addColumn(10);
+			$rightcol=$cols->addColumn(2);
+			$leftcol->add('View')->set('Hello'." ".$this->api->auth->model['username']);
+			$rightcol->add('View')->set('Logout')->setElement('a')->setAttr('href','index.php?page=logout');
 		}
 
 	}
