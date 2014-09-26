@@ -48,4 +48,43 @@ class Model_Users extends Model_Table {
 			
 	}
 
+	function sendVerificationMail($email=null,$type=null,$activation_code=null){
+		if(!$this->loaded()) throw $this->exception('Model Must Be Loaded Before Email Send');
+
+
+		$this['activation_code'] = rand(1000,99999);
+		$this->save();
+		$epan=$this->add('Model_Epan');
+		$epan->tryLoadAny();
+
+		$this['email'] = $email;
+		$this['activation_code'] = $activation_code;
+		$type = null;
+
+			$tm=$this->add( 'TMail_Transport_PHPMailer' );
+			$msg=$this->add( 'SMLite' );
+			$msg->loadTemplate( 'mail/registrationVerifyMail' );
+			
+			//$msg->trySet('epan',$this->api->current_website['name']);		
+			$enquiry_entries="some text related to register verification";
+			$msg->trySetHTML('form_entries',$enquiry_entries);
+
+			$msg->SetHTML('activation_code',$this['activation_code']);
+
+			$email_body=$msg->render();	
+
+			$subject ="Thank you for Registration.";
+
+			try{
+				$tm->send( $email, $epan['email_username'], $subject, $email_body ,false,null);
+				// throw new \Exception($this['emailID'].$epan['email_username'], 1);
+				return true;
+			}catch( phpmailerException $e ) {
+				// throw $e;
+				$this->api->js(null,'$("#form-'.$_REQUEST['form_id'].'")[0].reset()')->univ()->errorMessage( $e->errorMessage() . " " . "rksinha.btech@gmail.com"  )->execute();
+			}catch( Exception $e ) {
+				throw $e;
+			}
+	}
+
 }

@@ -13,6 +13,8 @@ class View_Tools_UserPanel extends \componentBase\View_Component{
 		$user_panel_btn_registration_name="registration";
 		$user_panel_remember_pass="Remember password";
 		$user_panel_forgot_pass="forgot password";
+		$user_panel_activation_code="Re send Activation Code";
+		$user_panel_btn_Verify_name="Verify";
 
 		
 
@@ -27,15 +29,23 @@ class View_Tools_UserPanel extends \componentBase\View_Component{
 
 		if($this->html_attributes['user_panel_btn_login_name'])
 			$user_panel_btn_login_name=$this->html_attributes['user_panel_btn_login_name'];
+
+		if($this->html_attributes['user_panel_btn_Verify_name'])
+			$user_panel_btn_Verify_name=$this->html_attributes['user_panel_btn_Verify_name'];
 		
 		if($this->html_attributes['user_panel_forgot_pass'])
 			$user_panel_forgot_pass=$this->html_attributes['user_panel_forgot_pass'];
 
+		if($this->html_attributes['user_panel_activation_code'])
+			$user_panel_activation_code=$this->html_attributes['user_panel_activation_code'];
+
 		if($this->html_attributes['user_panel_btn_registration_name'])
 			$user_panel_btn_registration_name=$this->html_attributes['user_panel_btn_registration_name'];
-
+		
+		
 		if(!$this->api->auth->isLoggedIn()){
 			$this->api->stickyGET('new_registration');
+			$this->api->stickyGET('verify_account');
 
 			if($_GET['new_registration']){
 				$r_form = $this->add('Form');
@@ -63,10 +73,27 @@ class View_Tools_UserPanel extends \componentBase\View_Component{
 					$user_model['epan_id'] = $this->api->current_website->id;
 					$user_model->save();
 					// $r_form->js()->reload()->execute();
+					$user_model->sendVerificationMail();
 					$this->js(null,$this->js()->univ()->successMessage('Created Successfully'))->reload()->execute();
 				}
 
-			}else{
+			}elseif($_GET['verify_account']){
+
+				$verify_form=$this->add('Form');
+				$verify_form->addField('line','email_id');
+				$verify_form->addField('line','verification_code');
+				$verify_form->addSubmit('Submit');
+
+				if($verify_form->isSubmitted()){
+
+				$verify_user_model=$this->add('Model_Users');
+				$verify_user_model['email']=$verify_form['email_id'];
+				$verify_user_model['activation_code']=$verify_form['verification_code'];
+				$verify_user_model->save();
+				$verify_form->js()->reload()->execute();
+				} 
+			}
+			else{
 				// create login form
 				$form=$this->add('Form');
 				
@@ -100,8 +127,17 @@ class View_Tools_UserPanel extends \componentBase\View_Component{
 					$sign_up_field->js('click',$this->js()->reload(array('new_registration'=>1)));
 				}	
 				
+				if($this->html_attributes['user_panel_activation_code']){
+					$col=$cols->addColumn(3);
+					$activation_field = $form->add('View')->set($user_panel_activation_code)->setElement('a')->setAttr('href','index.php');
+					$col->add($activation_field);
+				}	
+				
 				$col = $cols->addColumn(3);
 				$submit_field = $form->addSubmit($user_panel_btn_login_name);
+
+				$verify_account=$form->add('Button')->set($user_panel_btn_Verify_name);
+				$verify_account->js('click',$this->js()->reload(array('verify_account'=>1)));
 				
 				$submit_field->js(true)->appendTo($col);//->add($submit_field);
 				$form->js(true)->find('.atk-buttons')->removeClass('atk-buttons');
@@ -129,7 +165,8 @@ class View_Tools_UserPanel extends \componentBase\View_Component{
 			}
 
 		}else{
-			// create hello user panel
+			// create Verify Account panel
+			
 			$this->add('View_Error');
 		}
 

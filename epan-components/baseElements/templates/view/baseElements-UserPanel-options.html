@@ -10,6 +10,14 @@
 	<input id="user_panel_username_caption" type="text"/>
 	</label>
 
+	<label for="user_panel_activation_code_placeholder">Re-send Activation Code
+	<input id="user_panel_activation_code_placeholder" type="text"/>
+	</label>
+
+	<label for="user_panel_verify_btn_placeholder">Verify Button Lable
+	<input id="user_panel_verify_btn_placeholder" type="text"/>
+	</label>
+
 	<label for="user_panel_password_caption">Password Caption
 	<input id="user_panel_password_caption" type="text"/>
 	</label>
@@ -58,6 +66,10 @@ $('#user_panel_username_placeholder').change(function(event) {
 	$(current_selected_component).attr('user_panel_username_placeholder',$('#user_panel_username_placeholder').val());
 	$(current_selected_component).univ().errorMessage('Save and reload Page to see changes');
 });
+$('#user_panel_activation_code_placeholder').change(function(event) {
+	$(current_selected_component).attr('user_panel_activation_code',$('#user_panel_activation_code_placeholder').val());
+	$(current_selected_component).univ().errorMessage('Save and reload Page to see changes');
+});
 $('#user_panel_password_placeholder').change(function(event) {
 	$(current_selected_component).attr('user_panel_password_placeholder',$('#user_panel_password_placeholder').val());
 	$(current_selected_component).univ().errorMessage('Save and reload Page to see changes');
@@ -85,6 +97,10 @@ $('#user_panel_new_registration_caption').change(function(event) {
 });
 $('#user_panel_login_caption').change(function(event) {
 	$(current_selected_component).attr('user_panel_btn_login_name',$('#user_panel_login_caption').val());
+	$(current_selected_component).univ().errorMessage('Save and reload Page to see changes');
+});
+$('#user_panel_verify_btn_placeholder').change(function(event) {
+	$(current_selected_component).attr('user_panel_btn_Verify_name',$('#user_panel_verify_btn_placeholder').val());
 	$(current_selected_component).univ().errorMessage('Save and reload Page to see changes');
 });
 
@@ -120,6 +136,8 @@ var <?$component_type?>_options = {
 		$('#user_panel_form_stacked').val($(current_selected_component).attr('form_stacked_on'));
 
 		$('#user_panel_username_placeholder').val($(current_selected_component).attr('user_panel_username_placeholder'));
+
+		$('#user_panel_verify_btn_caption').val($(current_selected_component).attr('user_panel_btn_Verify_name'));
 
 	}
 }
