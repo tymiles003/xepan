@@ -49,42 +49,55 @@ class Model_Users extends Model_Table {
 	}
 
 	function sendVerificationMail($email=null,$type=null,$activation_code=null){
-		if(!$this->loaded()) throw $this->exception('Model Must Be Loaded Before Email Send');
-
-
-		$this['activation_code'] = rand(1000,99999);
-		$this->save();
-		$epan=$this->add('Model_Epan');
-		$epan->tryLoadAny();
+		
+		if(!$this->loaded()){
+			$this->addCondition('email',$email);
+			$this->tryLoadAny();
+		}	
 
 		$this['email'] = $email;
 		$this['activation_code'] = $activation_code;
+		$this->save();
 		$type = null;
 
 			$tm=$this->add( 'TMail_Transport_PHPMailer' );
-			$msg=$this->add( 'SMLite' );
-			$msg->loadTemplate( 'mail/registrationVerifyMail' );
-			
-			//$msg->trySet('epan',$this->api->current_website['name']);		
-			$enquiry_entries="some text related to register verification";
-			$msg->trySetHTML('form_entries',$enquiry_entries);
 
-			$msg->SetHTML('activation_code',$this['activation_code']);
+			$subject =$this->api->current_website['user_registration_email_subject'];
+			$email_body=$this->api->current_website['user_registration_email_message_body'];	
+			$email_body=str_replace("{{name}}", $this['name'], $email_body);
+			$email_body=str_replace("{{email}}", $this['email'], $email_body);
+			$email_body=str_replace("{{user_name}}", $this['username'], $email_body);
+			$email_body=str_replace("{{password}}", $this['password'], $email_body);
+			$email_body=str_replace("{{activation_code}}", $this['activation_code'], $email_body);
+			$email_body=str_replace("{{click_here_to_activate}}", 
+											"<a href=\"".str_replace("&new_registration=1", " ", $this->api->url(null,array(
+													'activation_code'=>$this['activation_code'],
+													'activate_email'=>$this['email'],
+													'verify_account'=> 1
+												)))."\">Click Here to Activate Your Account</a>",$email_body);
 
-			$email_body=$msg->render();	
-
-			$subject ="Thank you for Registration.";
-
+				// throw new \Exception("Error Processing Request".$email_body);
+				
 			try{
-				$tm->send( $email, $epan['email_username'], $subject, $email_body ,false,null);
-				// throw new \Exception($this['emailID'].$epan['email_username'], 1);
+				$tm->send( $this['email'], $this->api->current_website['email_username'], $subject, $email_body ,false,null);
 				return true;
 			}catch( phpmailerException $e ) {
-				// throw $e;
-				$this->api->js(null,'$("#form-'.$_REQUEST['form_id'].'")[0].reset()')->univ()->errorMessage( $e->errorMessage() . " " . "rksinha.btech@gmail.com"  )->execute();
+				$this->api->js()->univ()->errorMessage( $e->errorMessage() . " "  )->execute();
 			}catch( Exception $e ) {
 				throw $e;
 			}
 	}
+
+	function verifyAccount($email, $activation_code){
+								
+		$this->addCondition('email',$email);
+		$this->tryLoadAny();
+		if($this['activation_code']==$activation_code){
+			$this['is_active']=true;
+			$this->update();
+			return true;
+		}else
+			return false;
+	}		
 
 }

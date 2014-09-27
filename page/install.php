@@ -93,7 +93,7 @@ class page_install extends Page {
 			$user['name']=$form['owner_name'];
 			$user['username']=$form['owner_username'];
 			$user['password']=$form['owner_password'];
-			$user['type']='SuperUser';
+			$user['type']='100';
 			$user['is_active']=true;
 			$user->save();
 

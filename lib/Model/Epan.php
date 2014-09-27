@@ -29,7 +29,6 @@ class Model_Epan extends Model_Table {
 		$this->addField('keywords')->caption('Keywords')->type('text')->mandatory('');//->system(true);
 		$this->addField('description')->type('text');//->system(true);
 		$this->addField('last_email_sent')->type('datetime')->defaultValue(date('Y-m-d H:i:s'));
-
 		// Email Settings
 		$this->addField('email_host');
 		$this->addField('email_port');
@@ -40,6 +39,8 @@ class Model_Epan extends Model_Table {
 		$this->addField('email_from');
 		$this->addField('email_from_name');
 		$this->addField('email_threshold')->hint('Maximum Emails sending allowed per hour for mass emailing')->defaultValue(200);
+		$this->addField('user_registration_email_subject');
+		$this->addField('user_registration_email_message_body')->type('text')->display(array('form'=>'RichText'));
 
 		$this->addField('parked_domain')->hint('Specify your domain in yourdomainname.com format');
 

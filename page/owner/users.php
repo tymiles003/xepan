@@ -11,6 +11,7 @@ class page_owner_users extends page_base_owner {
 
 		if($crud->grid){
 			$crud->grid->addButton('Options')->js('click',$this->js()->univ()->frameURL('User Options',$this->api->url('./options')));
+			$crud->grid->addButton('Email Config')->js('click',$this->js()->univ()->frameURL('User Email Configuration',$this->api->url('./emailconfig')));
 		}
 	}
 
@@ -22,6 +23,17 @@ class page_owner_users extends page_base_owner {
 		if($form->isSubmitted()){
 			$form->update();
 			$form->js(null,$form->js()->univ()->successMessage('Options Updated'))->univ()->closeDialog()->execute();
+		}
+	}
+
+	function page_emailconfig(){
+		$form = $this->add('Form');
+		$form->addClass('stacked');
+		$form->setModel($this->api->current_website,array('user_registration_email_subject','user_registration_email_message_body'));
+		$form->addSubmit('save');
+		if($form->isSubmitted()){
+			$form->update();
+			$form->js(null,$form->js()->univ()->successMessage('Email Config Updated'))->univ()->closeDialog()->execute();
 		}
 	}
 }
