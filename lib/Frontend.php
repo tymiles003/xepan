@@ -267,7 +267,7 @@ class Frontend extends ApiFrontend{
 
 		foreach ( $plugins->getRows() as $plg ) {
 			if ( !in_array( $plg_url=$plg['namespace'].'/Plugins_'.$plg['name'], $this->website_plugins_array ) ) {
-				$p = $this->add( $plg['namespace'].'/Plugins_'.$plg['name'] );
+				$p = $this->add( $plg['namespace'].'/Plugins_'.str_replace("_", "", $this->api->normalizeName($plg['name'] )));
 				$this->website_plugins_array[] = $plg_url;
 				$this->website_plugins[] = $p;
 			}
