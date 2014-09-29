@@ -8,6 +8,19 @@ class page_owner_installcomponent extends page_base_owner {
 		$component = $this->add('Model_MarketPlace')->load($_GET['component_id']);
 		$this->setModel($component);
 		
+		if( $this->add('Model_InstalledComponents')
+			->addCondition('epan_id',$this->api->current_website->id)
+			->addCondition('component_id',$component->id)
+			->tryLoadAny()
+			->loaded())
+		{
+			// Component is installed
+			$this->add('View')->set('Component Already Installed')->addClass('alert')->addClass('alert-success');
+		}else{
+			// Component is not installed
+			$this->add('Button')->set('Install')->js('click')->univ()->frameURL('Install ???',$this->api->url($component['namespace'].'_page_install'));
+		}
+		
 		if(is_file($path = getcwd().'/epan-components/'.$component['namespace'].'/templates/view/'.$component['namespace'].'-about.html')){
 			$l=$this->api->locate('addons',$component['namespace'], 'location');
 			$this->api->pathfinder->addLocation(
@@ -21,18 +34,6 @@ class page_owner_installcomponent extends page_base_owner {
 			$about_component = $this->add('View',null,null,array('view/'.$component['namespace'].'-about'));
 		}
 
-		if( $this->add('Model_InstalledComponents')
-			->addCondition('epan_id',$this->api->current_website->id)
-			->addCondition('component_id',$component->id)
-			->tryLoadAny()
-			->loaded())
-		{
-			// Component is installed
-			$this->add('View')->set('Component Already Installed')->addClass('alert')->addClass('alert-success');
-		}else{
-			// Component is not installed
-			$this->add('Button')->set('Install')->js('click')->univ()->frameURL('Install ???',$this->api->url($component['namespace'].'_page_install'));
-		}
 
 	}
 
