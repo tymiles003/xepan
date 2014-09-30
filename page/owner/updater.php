@@ -54,7 +54,7 @@ class page_owner_updater extends page_base_owner {
 		}
 
 		// fire queries to convert superuser to 100 etc
-		$this->query('UPDATE users SET type=IF(type="SuperUser",100,IF(type="BackEndUser",80,50))');
+		$this->query('UPDATE users SET type=IF(type="SuperUser",100,IF(type="BackEndUser",80,IF(type=100,100,50)))');
 		// change users type to int
 		$this->query('ALTER TABLE `users` CHANGE `type` `type` INT NULL DEFAULT NULL');
 
