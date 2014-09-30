@@ -308,7 +308,7 @@ function remove_element(obj) {
 
 $('#epan-save-btn').click(function(event) {
 
-
+    $('body').trigger('beforeSave');
     $('body').univ().errorMessage('Wait.. saving your page !!!');
 
     unSelectAllComponent();
@@ -353,13 +353,16 @@ $('#epan-save-btn').click(function(event) {
                 $('body').univ().errorMessage('Could Not save Page');
                 eval(message);
             }
+            $('body').trigger('saveSuccess');
             console.log("success");
         })
         .fail(function(err) {
+            $('body').trigger('saveFail');
             console.log('Error goit');
             console.log(err);
         })
         .always(function() {
+            $('body').trigger('afterSave');
             console.log("complete");
         });
 
