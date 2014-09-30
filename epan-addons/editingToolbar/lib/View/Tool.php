@@ -15,6 +15,7 @@ class View_Tool extends \View {
 	 * @var string
 	 */
 	public $title='Tool';
+	public $display_name='Tool';
 	/**
 	 * $class Which component to be rendered as on Drop by this Tool
 	 * @var String
@@ -69,7 +70,7 @@ class View_Tool extends \View {
 
 	function recursiveRender(){
 		$this->template->trySet('namespace',$this->namespace);
-		$this->template->set('title',$this->title);
+		$this->template->set('title',$this->display_name);
 		$this->template->set('class',$this->class);
 		$icon_path='epan-components/'.$this->namespace.'/templates/images/'; 
 		if($this->icon_file == null){

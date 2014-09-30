@@ -10,6 +10,9 @@ class Model_Tools extends Model_Table {
 		$this->hasOne('MarketPlace','component_id');
 		
 		$this->addField('name');
+
+		$this->addField('display_name');
+		$this->addField('order')->type('int');
 		
 		$this->addField('is_serverside')->type('boolean');
 		$this->addField('is_sortable')->type('boolean');

@@ -3,6 +3,7 @@
 namespace baseElements;
 
 class View_Tools_Title extends \componentBase\View_Component{
+	public $html_attributes=array(); // ONLY Available in server side components
 	function init(){
 		parent::init();
 	}

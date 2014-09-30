@@ -20,14 +20,14 @@ class View_FrontToolBar extends \View{
 
 
 		foreach ($market_place as $market_place_array) {
-			$tools = $market_place->ref('Tools');
+			$tools = $market_place->ref('Tools')->setOrder('order');
 			
 			if( ! $this->api->edit_template){
 				$tools->addCondition('name','not like','%template%');
 			}
 			
 			foreach ($tools as $cmp) {
-				$element_tab->add('editingToolbar/View_Tool',array('namespace'=>$market_place['namespace'],'title'=>$tools['name'],'class'=>'View_Tools_'.str_replace("_", "", $this->api->normalizeName($tools['name'])),'is_serverside'=>$tools['is_serverside'],'is_sortable'=>$tools['is_sortable'],'is_resizable'=>$tools['is_resizable']));
+				$element_tab->add('editingToolbar/View_Tool',array('namespace'=>$market_place['namespace'],'display_name'=>$tools['display_name']?:$tools['name'],'title'=>$tools['name'],'class'=>'View_Tools_'.str_replace("_", "", $this->api->normalizeName($tools['name'])),'is_serverside'=>$tools['is_serverside'],'is_sortable'=>$tools['is_sortable'],'is_resizable'=>$tools['is_resizable']));
 			}
 		}
 
@@ -46,8 +46,9 @@ class View_FrontToolBar extends \View{
 			// $tool_block->add('View')->set($installed_components['name']);
 			$tools=$this->add('Model_Tools')->addCondition('component_id',$installed_components['component_id']);
 			$tools->join('epan_components_marketplace','component_id')->addField('namespace');
+			$tools->setOrder('order');
 			foreach ($tools as $cmp) {
-				$component_tab->add('editingToolbar/View_Tool',array('namespace'=>$tools['namespace'],'title'=>$tools['name'],'class'=>'View_Tools_'.str_replace("_", "", $this->api->normalizeName($tools['name'])),'is_serverside'=>$tools['is_serverside'],'is_sortable'=>$tools['is_sortable'],'is_resizable'=>$tools['is_resizable']));
+				$component_tab->add('editingToolbar/View_Tool',array('namespace'=>$tools['namespace'],'display_name'=>$tools['display_name']?:$tools['name'], 'title'=>$tools['name'],'class'=>'View_Tools_'.str_replace("_", "", $this->api->normalizeName($tools['name'])),'is_serverside'=>$tools['is_serverside'],'is_sortable'=>$tools['is_sortable'],'is_resizable'=>$tools['is_resizable']));
 			}
 		}
 

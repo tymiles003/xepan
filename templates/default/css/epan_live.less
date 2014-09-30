@@ -1,6 +1,6 @@
 @import "less/mixins.less";
 @padding-toolbar: 5px;
-@height-toolbar: 110px;
+@height-toolbar: 150px;
 
 .top-page {
 	min-height: 100px;
@@ -59,7 +59,7 @@
 	.components-section {
 		// width: 500px;
 		margin-left: 20px;
-		height: 75px;
+		height: 120px;
 		overflow-x: auto;
 		overflow-y: hidden;
 		// float: left;
@@ -76,6 +76,18 @@
 				&:hover{
 					// #gradient > .vertical(#ddd,#aaa);
 					background-color: gray;
+				}
+
+				ul {
+					display: box;
+					display: -webkit-box;
+					display: -moz-box;
+				}
+
+				div.ui-tabs-panel {
+					display: box;
+					display: -webkit-box;
+					display: -moz-box;
 				}
 				
 				img.tool_shadow{
