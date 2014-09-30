@@ -1,4 +1,7 @@
 // Make sortable containers sortable
+xepan_editing_mode = true;
+console.log('xepan_editing_mode Set in JavaScript Global Scope');
+
 origin = 'sortable';
 component_html = '';
 create_sortable = false;
@@ -112,6 +115,10 @@ $(".epan-sortable-component").sortable(s = {
 
             if ($('#epan-component-border:checked').size() > 0) {
                 $(new_obj).addClass('component-outline');
+            }
+
+            if ($('#epan-component-extra-padding:checked').size() > 0) {
+                $(new_obj).addClass('epan-sortable-extra-padding');
             }
             // TODO if editor class is implemented in new object
             // and contenteditable is true
@@ -332,6 +339,8 @@ $('#epan-save-btn').click(function(event) {
         calling_page = 'index.php?page=savetemplate&cut_page=1&template_id=' + current_template_id;
     }
 
+    $("body").css("cursor", "default");
+
     $.ajax({
         url: calling_page,
         type: 'POST',
@@ -375,6 +384,8 @@ $('#epan-save-btn').click(function(event) {
 
 
 $(function() {
+
+    $('body').trigger('xepan_editing_mode');
 
     // IF NOT EDITING TEMPLATE REMOVE CLASSES FROM TEMPLATES TO MAKE THEM NON EDITABLE
     if (edit_template !== true) {
