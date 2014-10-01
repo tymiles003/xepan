@@ -88,6 +88,9 @@ class Model_EpanPage extends Model_Table {
 	}
 
 	function generateURI(){
+		if($this->api->getConfig('sef_url')){
+			return $this['name'];
+		}
 		return "index.php?subpage=".$this['name'];
 	}
 }
