@@ -22,7 +22,7 @@ class page_index extends Page {
 		$this->api->template->trySet('page_title',$page_model['title']);
 		$this->api->template->trySet('keywords',$page_model['keywords']);
 		$this->api->template->trySet('description',$page_model['description']);
-		$this->api->template->trySet('style',$page_model['body_attributes']);
+		$this->api->template->trySet('style',$page_model->ref('template_id')->get('body_attributes').'; '.$page_model['body_attributes']);
 
 		try{
 			$this->api->exec_plugins('content-fetched',$page_model);

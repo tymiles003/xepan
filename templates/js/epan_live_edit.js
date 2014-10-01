@@ -329,7 +329,6 @@ $('#epan-save-btn').click(function(event) {
     $(html_body).find('[data-is-serverside-component=true]').html("");
     html_body = encodeURIComponent($.trim($(html_body).html()));
 
-
     html_crc = crc32(html_body);
     calling_page = 'index.php?page=save&cut_page=1';
 

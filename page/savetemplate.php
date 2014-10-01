@@ -22,6 +22,7 @@ class page_savetemplate extends Page {
 			$content = urldecode($_POST['body_html']);
 			$template = $this->add('Model_EpanTemplates')->load($_GET['template_id']);
 			$template['content'] = $content;
+			$template['body_attributes'] = urldecode( $_POST['body_attributes'] );
 			$template->save();
 		}
 		catch( Exception_StopInit $e ) {

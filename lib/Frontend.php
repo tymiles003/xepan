@@ -221,6 +221,7 @@ class Frontend extends ApiFrontend{
 					$this->template->loadTemplateFromString($shared_template);
 					$this->template->appendHTML('js_include',implode("\n", $old_js_include[0]));
 					$this->template->trySet('template_css',$current_template['css']);
+					$this->template->trySet('style',$current_template['body_attributes']);
 					
 				}
 				
