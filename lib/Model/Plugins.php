@@ -22,6 +22,9 @@ class Model_Plugins extends Model_Table {
 
 	function beforeSave(){
 
+		if($this->loaded())
+			throw $this->exception('Sorry Editing Facility is not implemented yet in Plugins','ValidityCheck')->setField('name');
+
 		$namespace = $this->ref('component_id')->get('namespace');
 
 		$check_existing = $this->add('Model_Plugins');
