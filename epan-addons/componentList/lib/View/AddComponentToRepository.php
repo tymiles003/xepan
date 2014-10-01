@@ -29,6 +29,12 @@ class View_AddComponentToRepository extends \View{
 						$this->add( 'View_Error' )->set( $msg );
 						return true;
 					}
+
+					if(!is_writable(getcwd().DS.'epan-components')){
+						$this->add( 'View_Error' )->set( 'Writing Permissions Issue' );
+						return;
+					}
+
 					// read config.xml and search for epan-system variables
 					$xml = simplexml_load_string( $config_file_data );
 					$json = json_encode( $xml );
