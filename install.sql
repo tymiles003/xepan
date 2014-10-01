@@ -215,7 +215,7 @@ CREATE TABLE `epan_components_marketplace` (
   `git_path` varchar(255) DEFAULT NULL,
   `initialize_and_clone_from_git` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=72 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=77 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -244,7 +244,7 @@ CREATE TABLE `epan_components_plugins` (
   `is_system` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_component_id` (`component_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=17 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -275,7 +275,7 @@ CREATE TABLE `epan_components_tools` (
   `order` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_component_id` (`component_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=98 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=140 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -303,7 +303,7 @@ CREATE TABLE `epan_installed_components` (
   `params` varchar(255) DEFAULT NULL,
   `installed_on` date DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -312,7 +312,6 @@ CREATE TABLE `epan_installed_components` (
 
 LOCK TABLES `epan_installed_components` WRITE;
 /*!40000 ALTER TABLE `epan_installed_components` DISABLE KEYS */;
-INSERT INTO `epan_installed_components` VALUES (23,1,67,1,NULL,'2014-09-29'),(24,1,68,1,NULL,'2014-09-29'),(25,1,69,1,NULL,'2014-09-30');
 /*!40000 ALTER TABLE `epan_installed_components` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -351,7 +350,7 @@ CREATE TABLE `epan_page` (
 
 LOCK TABLES `epan_page` WRITE;
 /*!40000 ALTER TABLE `epan_page` DISABLE KEYS */;
-INSERT INTO `epan_page` VALUES (1,0,'home','Home',1,0,'xEpan CMS, an innovative approach towards Drag And Drop CMS.','World\'s best and easiest cms :)','xEpan CMS, an innovative approach towards Drag And Drop CMS.',NULL,'cursor: default; overflow: auto; background-color: rgb(255, 255, 255);',NULL,'2014-09-30 19:23:48','public',1);
+INSERT INTO `epan_page` VALUES (1,0,'home','Home',1,0,'xEpan CMS, an innovative approach towards Drag And Drop CMS.','World\'s best and easiest cms :)','xEpan CMS, an innovative approach towards Drag And Drop CMS.',NULL,NULL,NULL,'2014-10-01 15:37:42','public',1);
 /*!40000 ALTER TABLE `epan_page` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -397,6 +396,7 @@ CREATE TABLE `epan_templates` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `epan_id` int(11) DEFAULT NULL,
   `name` varchar(255) DEFAULT NULL,
+  `body_attributes` text,
   `content` text,
   `is_current` tinyint(1) DEFAULT NULL,
   `css` text,
@@ -411,7 +411,7 @@ CREATE TABLE `epan_templates` (
 
 LOCK TABLES `epan_templates` WRITE;
 /*!40000 ALTER TABLE `epan_templates` DISABLE KEYS */;
-INSERT INTO `epan_templates` VALUES (1,1,'default','<div id=\"6b9c7e51-526c-41f1-c404-66b136b60a83\" component_namespace=\"baseElements\" component_type=\"TemplateContentRegion\" class=\"epan-sortable-component epan-component  ui-sortable\" style=\"\" contenteditable=\"false\">   {{Content}} </div>',1,NULL);
+INSERT INTO `epan_templates` VALUES (1,1,'default',NULL,'<div id=\"6b9c7e51-526c-41f1-c404-66b136b60a83\" component_namespace=\"baseElements\" component_type=\"TemplateContentRegion\" class=\"epan-sortable-component epan-component  ui-sortable\" style=\"\" contenteditable=\"false\">   {{Content}} </div>',1,NULL);
 /*!40000 ALTER TABLE `epan_templates` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -493,7 +493,7 @@ CREATE TABLE `users` (
   `last_login_date` date DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_epan_id` (`epan_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -514,4 +514,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-10-01 11:22:10
+-- Dump completed on 2014-10-01 15:41:22
