@@ -45,10 +45,16 @@ class page_owner_updater extends page_base_owner {
 				$lst = scandir($dir);
 	                array_shift($lst);
 	                array_shift($lst);
-	            foreach ($lst as $item){
-	            	$model = $this->add('Model_'.str_replace(".php", '', $item));
-	            	$model->add('dynamic_model/Controller_AutoCreator');
-	            	$model->tryLoadAny();
+	            for($i=0;$i<=2;$i++){
+		            foreach ($lst as $item){
+		            	try{
+			            	$model = $this->add('Model_'.str_replace(".php", '', $item));
+			            	$model->add('dynamic_model/Controller_AutoCreator');
+			            	$model->tryLoadAny();
+		            	}catch(Exception $e){
+
+		            	}
+		            }
 	            }
         	}
 		}
