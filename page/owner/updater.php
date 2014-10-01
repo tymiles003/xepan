@@ -40,23 +40,68 @@ class page_owner_updater extends page_base_owner {
 		$repo->run('reset --hard origin/master');
 
 		if($dynamic_model_update){
-			$dir = $installation_path.DS.'lib'.DS.'Model';
-			if(is_dir($dir)){
-				$lst = scandir($dir);
-	                array_shift($lst);
-	                array_shift($lst);
-	            for($i=0;$i<=2;$i++){
-		            foreach ($lst as $item){
-		            	try{
-			            	$model = $this->add('Model_'.str_replace(".php", '', $item));
-			            	$model->add('dynamic_model/Controller_AutoCreator');
-			            	$model->tryLoadAny();
-		            	}catch(Exception $e){
 
-		            	}
-		            }
-	            }
-        	}
+			$model = $this->add('Model_Branch');
+        	$model->add('dynamic_model/Controller_AutoCreator');
+        	$model->tryLoadAny();
+
+        	$model = $this->add('Model_Staff');
+        	$model->add('dynamic_model/Controller_AutoCreator');
+        	$model->tryLoadAny();
+
+        	$model = $this->add('Model_EpanCategory');
+        	$model->add('dynamic_model/Controller_AutoCreator');
+        	$model->tryLoadAny();
+
+        	$model = $this->add('Model_Epan');
+        	$model->add('dynamic_model/Controller_AutoCreator');
+        	$model->tryLoadAny();
+
+        	$model = $this->add('Model_EpanTemplates');
+        	$model->add('dynamic_model/Controller_AutoCreator');
+        	$model->tryLoadAny();
+
+        	$model = $this->add('Model_EpanPage');
+        	$model->add('dynamic_model/Controller_AutoCreator');
+        	$model->tryLoadAny();
+
+        	$model = $this->add('Model_EpanPageSnapshots');
+        	$model->add('dynamic_model/Controller_AutoCreator');
+        	$model->tryLoadAny();
+
+        	$model = $this->add('Model_MarketPlace');
+        	$model->add('dynamic_model/Controller_AutoCreator');
+        	$model->tryLoadAny();
+
+        	$model = $this->add('Model_InstalledComponents');
+        	$model->add('dynamic_model/Controller_AutoCreator');
+        	$model->tryLoadAny();
+        	
+        	$model = $this->add('Model_Tools');
+        	$model->add('dynamic_model/Controller_AutoCreator');
+        	$model->tryLoadAny();
+
+        	$model = $this->add('Model_Plugins');
+        	$model->add('dynamic_model/Controller_AutoCreator');
+        	$model->tryLoadAny();
+
+        	$model = $this->add('Model_Alerts');
+        	$model->add('dynamic_model/Controller_AutoCreator');
+        	$model->tryLoadAny();
+
+        	$model = $this->add('Model_Aliases');
+        	$model->add('dynamic_model/Controller_AutoCreator');
+        	$model->tryLoadAny();
+
+        	$model = $this->add('Model_Messages');
+        	$model->add('dynamic_model/Controller_AutoCreator');
+        	$model->tryLoadAny();
+
+        	$model = $this->add('Model_Users');
+        	$model->add('dynamic_model/Controller_AutoCreator');
+        	$model->tryLoadAny();
+
+
 		}
 
 		// fire queries to convert superuser to 100 etc
