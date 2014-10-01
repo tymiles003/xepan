@@ -599,8 +599,14 @@ $(function() {
         if (current_selected_component === undefined) {
             next_component = $('.top-page').children('.epan-component:first-child');
         } else {
-            var $x = $('.epan-component');
+            var $x = $('.epan-component:not(#web_index)');
             next_component = $x.eq($x.index($(current_selected_component)) + 1);
+        }
+
+        if($(next_component).attr('id') === undefined){
+            event.stopPropagation();
+            $.univ.errorMessage('No Component On Screen');
+            return;
         }
 
         selectComponent(next_component);
@@ -616,7 +622,7 @@ $(function() {
         if (current_selected_component === undefined) {
             next_component = $('.top-page').children('.epan-component:first-child');
         } else {
-            var $x = $('.epan-component');
+            var $x = $('.epan-component:not(#web_index)');
             next_component = $x.eq($x.index($(current_selected_component)) - 1);
         }
 
