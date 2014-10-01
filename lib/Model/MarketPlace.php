@@ -160,6 +160,9 @@ class Model_MarketPlace extends Model_Table {
 					$tool = $this->add('Model_Tools');
 					$tool['component_id'] = $marketplace->id;
 					$tool['name'] = $tool_2['name'];
+					$tool['display_name'] = (is_array($tool_2['display_name']))?'':$tool_2['display_name'];
+					$tool['order'] = (is_array($tool_2['order']))?'':$tool_2['order'];
+					$tool['name'] = $tool_2['name'];
 					$tool['is_serverside'] = $tool_2['is_serverside'];
 					$tool['is_resizable'] = $tool_2['is_resizable'];
 					$tool['is_sortable'] = $tool_2['is_sortable'];
@@ -171,6 +174,8 @@ class Model_MarketPlace extends Model_Table {
 				$tool = $this->add('Model_Tools');
 				$tool['component_id'] = $marketplace->id;
 				$tool['name'] = $tools['name'];
+				$tool['display_name'] = (is_array($tool_2['display_name']))?'':$tool_2['display_name'];
+				$tool['order'] = (is_array($tool_2['order']))?'':$tool_2['order'];
 				$tool['is_serverside'] = $tools['is_serverside'];
 				$tool['is_resizable'] = $tools['is_resizable'];
 				$tool['is_sortable'] = $tools['is_sortable'];
@@ -233,7 +238,7 @@ class Model_MarketPlace extends Model_Table {
 		$xml->addChild('has_toolbar_tools',$this['has_toolbar_tools']);
 		$xml->addChild('has_owner_modules',$this['has_owner_modules']);
 		$xml->addChild('has_live_edit_app_page',$this['has_live_edit_app_page']);
-		$xml->addChild('git_path',$this['git_path']);
+		$xml->addChild('git_path',$this['git_path']?:0);
 		$xml->addChild('initialize_and_clone_from_git',$this['initialize_and_clone_from_git']);
 
 		$tools_node = $xml->addChild('Tools');
@@ -241,6 +246,8 @@ class Model_MarketPlace extends Model_Table {
 		foreach ($tools = $this->ref('Tools') as $tools_array) {
 			$tool_node = $tools_node->addChild('Tool');
 			$tool_node->addChild('name',$tools['name']);
+			$tool_node->addChild('display_name',$tools['display_name']);
+			$tool_node->addChild('order',$tools['order']);
 			$tool_node->addChild('is_serverside',$tools['is_serverside']);
 			$tool_node->addChild('is_resizable',$tools['is_resizable']);
 			$tool_node->addChild('is_sortable',$tools['is_sortable']);
