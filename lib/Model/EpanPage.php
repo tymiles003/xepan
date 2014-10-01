@@ -10,8 +10,7 @@ class Model_EpanPage extends Model_Table {
 		$this->addCondition('epan_id',$this->api->current_website->id);
 		
 		$this->hasOne('EpanPage','parent_page_id')->defaultValue(0);
-		$this->hasOne('EpanTemplates','template_id')
-			->defaultValue($this->add('Model_EpanTemplates')->addCondition('is_current',true)->loadAny()->get('id'));
+		$this->hasOne('EpanTemplates','template_id');
 		$this->addField('name')->caption('Url'); // Menu name for this page default is 'Home'
 		$this->addField('menu_caption')->caption('Menu')->hint('Leave blank if you don\'t want page in menus'); // Menu name for this page default is 'Home'
 		$this->addField('is_template')->type('boolean')->defaultValue(false);
@@ -63,6 +62,8 @@ class Model_EpanPage extends Model_Table {
 		if(trim($this['keywords'])=='') $this['keywords'] = $this->ref('epan_id')->get('keywords');
 		if(trim($this['description'])=='') $this['description'] = $this->ref('epan_id')->get('description');
 		
+		if(!$this['template_id']) $this['template_id'] = $this->add('Model_EpanTemplates')->addCondition('is_current',true)->loadAny()->get('id');
+
 		$this['updated_on']=date('Y-m-d H:i:s');
 	}
 
