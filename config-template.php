@@ -38,4 +38,4 @@ if(!defined('DIRECTORY_SEPERATOR'))
 if(!defined('DS'))
 	define('DS',DIRECTORY_SEPERATOR);
 
-$config['xepan']['events']=array('content-fetched');
+$config['xepan']['events']=array('content-fetched','epan-page-before-save','epan-page-after-save','goal');
