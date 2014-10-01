@@ -89,6 +89,8 @@ class View_AddComponentToRepository extends \View{
 								$tool = $this->add('Model_Tools');
 								$tool['component_id'] = $marketplace->id;
 								$tool['name'] = $tool_2['name'];
+								$tool['display_name'] = (is_array($tool_2['display_name']))?'':$tool_2['display_name'];
+								$tool['order'] = (is_array($tool_2['order']))?'':$tool_2['order'];
 								$tool['is_serverside'] = $tool_2['is_serverside'];
 								$tool['is_resizable'] = $tool_2['is_resizable'];
 								$tool['is_sortable'] = $tool_2['is_sortable'];
@@ -100,6 +102,8 @@ class View_AddComponentToRepository extends \View{
 							$tool = $this->add('Model_Tools');
 							$tool['component_id'] = $marketplace->id;
 							$tool['name'] = $tools['name'];
+							$tool['display_name'] = (is_array($tools['display_name']))?'':$tools['display_name'];
+							$tool['order'] = (is_array($tools['order']))?'':$tools['order'];
 							$tool['is_serverside'] = $tools['is_serverside'];
 							$tool['is_resizable'] = $tools['is_resizable'];
 							$tool['is_sortable'] = $tools['is_sortable'];
