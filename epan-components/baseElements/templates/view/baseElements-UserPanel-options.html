@@ -1,50 +1,74 @@
 <div id='<?$_name?>' class='epan-component-options' component_type="<?$component_type?>">
-	<h4><?$component_type_name?></h4>
+	<div class="panel-group" id="accordion">
+		<div class="panel panel-default">
+    		<div class="panel-heading">
+      			<h4 class="panel-title">
+       			 	<a data-toggle="collapse" data-parent="#accordion" href="#user-panel">
+						<h4><?$component_type_name?></h4>
+        			</a>
+      			</h4>
+    		</div>
+    	<div id="user-panel" class="panel-collapse collapse">
+      	<div class="panel-body">
 
-	<input id="user_panel_form_stacked" type="checkbox">Stacked</input>
-	<input id="user_panel_remember_<?$id?>" type="checkbox">Remember Me</input></br>
-	<input id="user_panel_forgotpassword_<?$id?>" type="checkbox">Forgot Password</input></br>
-	<input id="user_panel_new_registration_<?$id?>" type="checkbox">New Registration</input></br>
+      	<label for="user_panel_login_view">
+      	Login View
+			<input id="user_panel_login_view" type="checkbox"/></br>
+      	</label>
+			
+			<label for="user_panel_redirect_page">Login Page Redirect
+			<input id="user_panel_redirect_page">
+			</input>	
+			</label>
 
-	<label for="user_panel_username_caption">Username Caption
-	<input id="user_panel_username_caption" type="text"/>
-	</label>
+			<input id="user_panel_form_stacked" type="checkbox">Stacked</input>
+			<input id="user_panel_remember_<?$id?>" type="checkbox">Remember Me</input></br>
+			<input id="user_panel_forgotpassword_<?$id?>" type="checkbox">Forgot Password</input></br>
+			<input id="user_panel_new_registration_<?$id?>" type="checkbox">New Registration</input></br>
 
-	<label for="user_panel_activation_code_placeholder">Re-send Activation Code
-	<input id="user_panel_activation_code_placeholder" type="text"/>
-	</label>
+			<label for="user_panel_username_caption">Username Caption
+			<input id="user_panel_username_caption" type="text"/>
+			</label>
 
-	<label for="user_panel_verify_btn_placeholder">Verify Button Lable
-	<input id="user_panel_verify_btn_placeholder" type="text"/>
-	</label>
+			<label for="user_panel_activation_code_placeholder">Re-send Activation Code
+			<input id="user_panel_activation_code_placeholder" type="text"/>
+			</label>
 
-	<label for="user_panel_password_caption">Password Caption
-	<input id="user_panel_password_caption" type="text"/>
-	</label>
+			<label for="user_panel_verify_btn_placeholder">Verify Button Lable
+			<input id="user_panel_verify_btn_placeholder" type="text"/>
+			</label>
 
-	<label for="user_panel_remember_caption">Remember Caption
-	<input id="user_panel_remember_caption" type="text"/>
-	</label>
+			<label for="user_panel_password_caption">Password Caption
+			<input id="user_panel_password_caption" type="text"/>
+			</label>
 
-	<label for="user_panel_forgotpassword_caption">Forgot Password Caption
-	<input id="user_panel_forgotpassword_caption" type="text"/>
-	</label>
+			<label for="user_panel_remember_caption">Remember Caption
+			<input id="user_panel_remember_caption" type="text"/>
+			</label>
 
-	<label for="user_panel_login_caption">Login Button Caption
-	<input id="user_panel_login_caption" type="text"/>
-	</label>
+			<label for="user_panel_forgotpassword_caption">Forgot Password Caption
+			<input id="user_panel_forgotpassword_caption" type="text"/>
+			</label>
 
-	<label for="user_panel_new_registration_caption">New Registration Button Caption
-	<input id="user_panel_new_registration_caption" type="text"/>
-	</label>
+			<label for="user_panel_login_caption">Login Button Caption
+			<input id="user_panel_login_caption" type="text"/>
+			</label>
 
+			<label for="user_panel_new_registration_caption">New Registration Button Caption
+			<input id="user_panel_new_registration_caption" type="text"/>
+			</label>
 
-	<label for="user_panel_username_placeholder">Username Placeholder
-	<input id="user_panel_username_placeholder"/>
-	</label>
-	<label for="user_panel_password_placeholder">Username Placeholder
-	<input id="user_panel_password_placeholder"/>
-	</label>
+			<label for="user_panel_username_placeholder">Username Placeholder
+			<input id="user_panel_username_placeholder"/>
+			</label>
+
+			<label for="user_panel_password_placeholder">Username Placeholder
+			<input id="user_panel_password_placeholder"/>
+			</label>
+      </div>
+    </div>
+</div>
+</div>
 </div>
 <script type="text/javascript">
 // ========== OPTION TO COMPONENT EFFECT ==============
@@ -53,7 +77,14 @@
 // 		$(current_selected_component).what to do ???
 // }) 
 
-
+$('#user_panel_login_view').change(function(event) {
+	if($('#user_panel_login_view').is(':checked')?$(current_selected_component).attr('login_view',1):$(current_selected_component).attr('login_view',0));
+	$(current_selected_component).univ().errorMessage('Save and reload Page to see changes');
+});
+$('#user_panel_redirect_page').change(function(event) {
+	$(current_selected_component).attr('user_panel_redirect_page',$('#user_panel_redirect_page').val());
+	$(current_selected_component).univ().errorMessage('Save and reload Page to see changes');
+});
 $('#user_panel_form_stacked').change(function(event) {
 	if($('#user_panel_form_stacked').is(':checked')?$(current_selected_component).attr('form_stacked_on',1):$(current_selected_component).attr('form_stacked_on',0));
 	$(current_selected_component).univ().errorMessage('Save and reload Page to see changes');
@@ -122,6 +153,10 @@ var <?$component_type?>_options = {
 		// TO TAKE VALUES FROM COMPONENT AND FILL OPTIONS
 		// 
 		// $(your_option_html_element).text($(current_selected_component).css('border'));
+		$('#user_panel_login_view').attr('checked',$(current_selected_component).attr("login_view")=='1'?true:false);
+
+		$('#user_panel_redirect_page').val($(current_selected_component).attr('user_panel_redirect_page'));
+
 		$('#user_panel_new_registration_<?$id?>').attr('checked',$(current_selected_component).attr("show_register_new_user")=='1'?true:false);
 		$('#user_panel_forgotpassword_<?$id?>').attr('checked',$(current_selected_component).attr("show_forgot_password")=='1'?true:false);
 		
